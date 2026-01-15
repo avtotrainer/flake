@@ -1,0 +1,72 @@
+* {
+  font-family: "Hack Nerd Font Propo", "Symbols Nerd Font", sans-serif;
+  font-size: 18px;
+  padding: 0 5px;
+}
+
+#waybar {
+  background: rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+  border-bottom: 2px solid #44475a;
+  padding: 5px;
+}
+
+#clock {
+  color: #f1fa8c;
+}
+
+#network {
+  color: #8be9fd;
+}
+
+#pulseaudio {
+  color: #50fa7b;
+}
+
+#battery {
+  color: #ffb86c;
+  padding-right: 2px;
+}
+
+#cpu {
+  color: #ff5555;
+}
+
+#memory {
+  color: #bd93f9;
+}
+
+#temperature {
+  color: #ff79c6;
+}
+
+#keyboard-state {
+  color: #ffffff;
+  background: #44475a;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+#custom-kbd {
+  padding: 0 6px;
+  font-size: 16px;
+}
+
+#custom-kbd:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+}
+
+#custom-kbd.lang-en {
+  color: #88c0d0;
+}
+
+#custom-kbd.lang-ka {
+  color: #a3be8c;
+}
+
+#custom-separator {
+  color: #666;
+  padding: 0 6px;
+  font-weight: bold;
+  opacity: 0.5;
+}
