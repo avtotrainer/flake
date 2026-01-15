@@ -4,28 +4,20 @@
   home.username = "avto";
   home.homeDirectory = "/home/avto";
 
-  # -------------------------
-  # Environment variables
-  # -------------------------
   home.sessionVariables = {
     HOSTNAME_FROM_FLAKE = hostname;
     EDITOR = "nvim";
     VISUAL = "nvim";
   };
 
-  # -------------------------
-  # Imports
-  # -------------------------
   imports = [
     ./zsh/zsh.nix
     ./nvim/nvim.nix
   ];
 
-  # -------------------------
-  # Dev tools
-  # -------------------------
   home.packages = with pkgs; [
     git
+    vscode
 
     nodejs_20
     go
@@ -41,8 +33,10 @@
 
   programs.git = {
     enable = true;
-    userName = "avto";
-    userEmail = "avto@example.com";
+    settings = {
+      user.name = "avto";
+      user.email = "avto@example.com";
+    };
   };
 
   home.stateVersion = "25.11";
