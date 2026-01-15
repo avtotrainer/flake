@@ -4,6 +4,11 @@
   home.username = "avto";
   home.homeDirectory = "/home/avto";
 
+  # ----------------------------------------
+  # Home Manager safety: backup existing files
+  # ----------------------------------------
+  home-manager.backupFileExtension = "bak";
+
   home.sessionVariables = {
     HOSTNAME_FROM_FLAKE = hostname;
     EDITOR = "nvim";
