@@ -21,16 +21,10 @@
         ./hosts/laptop/default.nix
 
         home-manager.nixosModules.home-manager
+
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-
-          # ✅ აქ არის სწორი ადგილი
-          home-manager.backupFileExtension = "bak";
-
-          home-manager.extraSpecialArgs = {
-            hostname = "nixos";
-          };
 
           home-manager.users.avto = import ./home/avto.nix;
         }
