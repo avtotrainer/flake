@@ -7,12 +7,12 @@
 
   home.username = "avto";
   home.homeDirectory = "/home/avto";
-  home.stateVersion = "23.11"; # ან რაც პირველად გამოიყენე HM-ში
+  home.stateVersion = "23.11";
 
   programs.home-manager.enable = true;
 
   ################
-  # XDG defaults #
+  # XDG          #
   ################
 
   xdg.enable = true;
@@ -47,17 +47,17 @@
   systemd.user.services.wallpaper = {
     Unit = {
       Description = "Wallpaper setter";
-      PartOf = [ "graphical-session.target" ];
-      After = [ "graphical-session.target" ];
+      PartOf = [ "hyprland-session.target" ];
+      After  = [ "hyprland-session.target" ];
     };
 
     Service = {
-      ExecStart = "%h/.config/hypr/wallpaper.sh";
       Type = "oneshot";
+      ExecStart = "%h/.config/hypr/wallpaper.sh";
     };
 
     Install = {
-      WantedBy = [ "graphical-session.target" ];
+      WantedBy = [ "hyprland-session.target" ];
     };
   };
 
@@ -70,8 +70,8 @@
   systemd.user.services.waybar = {
     Unit = {
       Description = "Waybar";
-      PartOf = [ "graphical-session.target" ];
-      After = [ "graphical-session.target" ];
+      PartOf = [ "hyprland-session.target" ];
+      After  = [ "hyprland-session.target" ];
     };
 
     Service = {
@@ -81,9 +81,8 @@
     };
 
     Install = {
-      WantedBy = [ "graphical-session.target" ];
+      WantedBy = [ "hyprland-session.target" ];
     };
   };
-
 }
 
