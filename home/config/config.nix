@@ -8,6 +8,4 @@
   xdg.configFile."lsd".source        = ./lsd;
   xdg.configFile."vifm".source       = ./vifm;
   xdg.configFile."fontconfig".source = ./fontconfig;
-
-  xdg.configFile."mimeapps.list".source = ./mimeapps.list;
 }
