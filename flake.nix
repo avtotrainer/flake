@@ -25,7 +25,9 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
 
-          # ⬇️ ეს არის მთავარი ფიქსი
+          # ✅ აქ არის სწორი ადგილი
+          home-manager.backupFileExtension = "bak";
+
           home-manager.extraSpecialArgs = {
             hostname = "nixos";
           };
