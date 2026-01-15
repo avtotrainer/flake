@@ -9,7 +9,7 @@
 
   # NvChad config (pinned, reproducible)
   xdg.configFile."nvim".source = pkgs.fetchgit {
-    url  = "https://github.com/avtotrainer/nvchad-2.5-config.git"\;
+    url  = "https://github.com/avtotrainer/nvchad-2.5-config.git";
     hash = "sha256-pzSd77BSsJxvPQmgF9BPNg6bjostdUNozJl7t07oz+c=";
   };
 }
