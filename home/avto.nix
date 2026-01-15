@@ -7,7 +7,7 @@
 
   # --- One-time adoption safety ---
   # Existing ~/.config files will be renamed to *.bak
-  home-manager.backupFileExtension = "bak";
+  home.backupFileExtension = "bak";
 
   # --- Session / Environment ---
   home.sessionVariables = {
@@ -23,14 +23,14 @@
     ./config/config.nix
   ];
 
-  # --- User-scoped packages (UI & tools) ---
+  # --- User-scoped packages ---
   home.packages = with pkgs; [
     git
     neovim
     waybar
   ];
 
-  # --- Git configuration ---
+  # --- Git ---
   programs.git = {
     enable = true;
     settings.user = {
@@ -39,6 +39,6 @@
     };
   };
 
-  # --- REQUIRED: do not change after first switch ---
+  # --- REQUIRED ---
   home.stateVersion = "25.11";
 }
