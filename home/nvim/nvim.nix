@@ -4,10 +4,11 @@
   programs.neovim = {
     enable = true;
 
-    defaultEditor = true;
     viAlias = true;
     vimAlias = true;
+    defaultEditor = true;
 
+    # Plugins only — no config here
     plugins = with pkgs.vimPlugins; [
       vim-nix
       plenary-nvim
@@ -15,14 +16,17 @@
       nvim-treesitter.withAllGrammars
       lualine-nvim
     ];
-
-    extraConfig = ''
-      set number
-      set relativenumber
-      set expandtab
-      set shiftwidth=2
-      set tabstop=2
-      set clipboard=unnamedplus
-    '';
   };
+
+  # Your actual Neovim config (Lua)
+  xdg.configFile."nvim/init.lua".text = ''
+    vim.o.number = true
+    vim.o.relativenumber = true
+    vim.o.expandtab = true
+    vim.o.shiftwidth = 2
+    vim.o.tabstop = 2
+    vim.o.clipboard = "unnamedplus"
+
+    require("lualine").setup()
+  '';
 }
