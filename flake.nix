@@ -17,20 +17,18 @@
     nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
       inherit system;
 
-      # აქ გადაეცემა ყველაფერი module-ებს და Home Manager-ს
-      specialArgs = {
-        hostname = "nixos";
-      };
-
       modules = [
-        # შენი არსებული host კონფიგი
         ./hosts/laptop/default.nix
 
-        # Home Manager როგორც NixOS module
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
+
+          # ⬇️ ეს არის მთავარი ფიქსი
+          home-manager.extraSpecialArgs = {
+            hostname = "nixos";
+          };
 
           home-manager.users.avto = import ./home/avto.nix;
         }
