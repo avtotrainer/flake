@@ -8,8 +8,10 @@
   xdg.configFile."vifm".source       = ./vifm;
   xdg.configFile."fontconfig".source = ./fontconfig;
 
-  # NvChad from GitHub (authoritative source)
-  xdg.configFile."nvim".source = pkgs.fetchGit {
-    url = "git@github.com:avtotrainer/nvchad-2.5-config.git";
+  # NvChad config fetched declaratively
+  xdg.configFile."nvim".source = pkgs.fetchgit {
+    url = "https://github.com/avtotrainer/nvchad-2.5-config.git"\;
+    # rev  = "main";            # optional (unpinned)
+    # hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
   };
 }
