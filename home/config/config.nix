@@ -8,10 +8,9 @@
   xdg.configFile."vifm".source       = ./vifm;
   xdg.configFile."fontconfig".source = ./fontconfig;
 
-  # NvChad config fetched declaratively
+  # NvChad config (pinned, reproducible)
   xdg.configFile."nvim".source = pkgs.fetchgit {
-    url = "https://github.com/avtotrainer/nvchad-2.5-config.git";
-    # rev  = "main";  # optional (unpinned)
-    # hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+    url  = "https://github.com/avtotrainer/nvchad-2.5-config.git"\;
+    hash = "sha256-pzSd77BSsJxvPQmgF9BPNg6bjostdUNozJl7t07oz+c=";
   };
 }
