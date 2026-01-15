@@ -1,11 +1,12 @@
-{ config, pkgs, osConfig, ... }:
+{ pkgs, osConfig, ... }:
 
 {
+  # --- Identity ---
   home.username = "avto";
   home.homeDirectory = "/home/avto";
 
-  # --- IMPORTANT ---
-  # Allow Home Manager to take over existing ~/.config files safely
+  # --- One-time adoption safety ---
+  # Existing ~/.config files will be renamed to *.bak
   home-manager.backupFileExtension = "bak";
 
   # --- Session / Environment ---
@@ -16,20 +17,20 @@
     NVIM_APPNAME = "nvim";
   };
 
-  # --- Imports ---
+  # --- Modular config imports ---
   imports = [
     ./zsh/zsh.nix
     ./config/config.nix
   ];
 
-  # --- User packages (UI + tools) ---
+  # --- User-scoped packages (UI & tools) ---
   home.packages = with pkgs; [
     git
     neovim
     waybar
   ];
 
-  # --- Git ---
+  # --- Git configuration ---
   programs.git = {
     enable = true;
     settings.user = {
@@ -38,6 +39,6 @@
     };
   };
 
-  # --- REQUIRED ---
+  # --- REQUIRED: do not change after first switch ---
   home.stateVersion = "25.11";
 }
