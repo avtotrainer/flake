@@ -1,11 +1,11 @@
-{ config, pkgs, ... }:
+{ config, pkgs, osConfig, ... }:
 
 {
   home.username = "avto";
   home.homeDirectory = "/home/avto";
 
   home.sessionVariables = {
-    HOSTNAME_FROM_FLAKE = config.networking.hostName;
+    HOSTNAME_FROM_FLAKE = osConfig.networking.hostName;
     EDITOR = "nvim";
     VISUAL = "nvim";
     NVIM_APPNAME = "nvim";
