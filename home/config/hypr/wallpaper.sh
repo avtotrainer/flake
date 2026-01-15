@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # ლოგის ფაილის მისამართი
-LOGFILE="$HOME/.config/hypr/wallpaper.log"
+LOGFILE="$HOME/.cache/hypr/wallpaper.log"
 
 # ლოგი სესიის თავში
 echo "[$(date)] — ფონური სურათის შეცვლა დაწყებულია" >> "$LOGFILE"
