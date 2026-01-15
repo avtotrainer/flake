@@ -11,7 +11,7 @@
   # NvChad config fetched declaratively
   xdg.configFile."nvim".source = pkgs.fetchgit {
     url = "https://github.com/avtotrainer/nvchad-2.5-config.git"\;
-    # rev  = "main";            # optional (unpinned)
+    # rev  = "main";  # optional (unpinned)
     # hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
   };
 }
