@@ -1,14 +1,12 @@
 { ... }:
 
 {
-  # Adopt existing configs as-is
   xdg.configFile."alacritty".source = ./alacritty;
   xdg.configFile."hypr".source       = ./hypr;
   xdg.configFile."nvim".source       = ./nvim;
   xdg.configFile."waybar".source     = ./waybar;
   xdg.configFile."lsd".source        = ./lsd;
   xdg.configFile."vifm".source       = ./vifm;
-  xdg.configFile."gtk-3.0".source    = ./gtk-3.0;
   xdg.configFile."fontconfig".source = ./fontconfig;
 
   xdg.configFile."mimeapps.list".source = ./mimeapps.list;
