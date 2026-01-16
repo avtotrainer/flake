@@ -32,6 +32,7 @@
   home.packages = with pkgs; [
     git
     neovim
+    jq
   ];
 
   ##################################################
