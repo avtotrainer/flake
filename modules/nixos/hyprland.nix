@@ -1,3 +1,5 @@
+{ pkgs, ... }:
+
 {
   services.xserver.enable = false;
 
@@ -5,10 +7,16 @@
 
   services.greetd = {
     enable = true;
-    settings.default_session = {
-      command = "hyprland";
-      user = "avto";
+    settings = {
+      default_session = {
+        command = "tuigreet --cmd hyprland";
+        user = "avto";
+      };
     };
   };
+
+  environment.systemPackages = with pkgs; [
+    tuigreet
+  ];
 }
 
