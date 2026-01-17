@@ -33,7 +33,7 @@
           # HM აღარ ეცდება old broken waybar.service-ის გაპარსვას/გადართვას
           home-manager.users.avto = { ... }: {
             imports = [ ./home/avto.nix ];
-            systemd.user.startServices = false;
+            # systemd.user.startServices = false;
           };
         }
       ];
