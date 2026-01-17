@@ -26,12 +26,18 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
 
-          # ✅ THE ONLY VALID PLACE
+          # აუცილებელია conflicts-ისთვის
           home-manager.backupFileExtension = "bak";
 
-          home-manager.users.avto = import ./home/avto.nix;
+          # ⚠️ დროებითი "გადასვლის რეჟიმი":
+          # HM აღარ ეცდება old broken waybar.service-ის გაპარსვას/გადართვას
+          home-manager.users.avto = { ... }: {
+            imports = [ ./home/avto.nix ];
+            systemd.user.startServices = false;
+          };
         }
       ];
     };
   };
 }
+
