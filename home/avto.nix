@@ -24,6 +24,7 @@
     ./zsh/zsh.nix
     ./config/config.nix
     ./systemd/graphical-session-bridge.nix
+    ./systemd/waybar.nix
   ];
 
   ##################################################
@@ -40,7 +41,7 @@
   ##################################################
   programs.waybar = {
     enable = true;
-    systemd.enable = true;
+    systemd.enable = false;
   };
 
   ##################################################
