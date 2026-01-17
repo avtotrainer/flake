@@ -36,15 +36,41 @@
   ];
 
   ##################################################
-  # WAYBAR — CONFIG managed by HM, START managed by NixOS systemd
+  # WAYBAR
+  # - კონფიგი: Home Manager
+  # - გაშვება: systemd user service (არა exec-once)
   ##################################################
   programs.waybar = {
     enable = true;
 
-    # მნიშვნელოვანია:
-    # HM-მა რომ არ შექმნას საკუთარი waybar.service (ჩვენ უკვე გვაქვს სისტემური),
-    # ამით ვუთიშავთ HM-ის systemd integration-ს.
+    # HM არ ქმნის საკუთარ waybar.service-ს
+    # (Waybar უკვე systemd user service-ად გაქვს გააზრებული)
     systemd.enable = false;
+  };
+
+  ##################################################
+  # GRAPHICAL SESSION FIX (DM გარეშე)
+  #
+  # ეს არის აკლებული რგოლი:
+  # - user systemd-ს ვეუბნებით, რომ graphical session დაიწყო
+  # - შედეგად ირთვება graphical-session.target
+  # - და Waybar-ის systemd service სტარტდება ნორმალურად
+  ##################################################
+  systemd.user.services.graphical-session-fix = {
+    Unit = {
+      Description = "Activate graphical-session.target (no DM)";
+      After = [ "default.target" ];
+    };
+
+    Service = {
+      Type = "oneshot";
+      ExecStart =
+        "${pkgs.systemd}/bin/systemctl --user start graphical-session.target";
+    };
+
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
   };
 
   ##################################################
