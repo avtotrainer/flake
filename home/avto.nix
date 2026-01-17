@@ -12,7 +12,6 @@
   ##################################################
   home.sessionVariables = {
     HOSTNAME_FROM_FLAKE = osConfig.networking.hostName;
-
     EDITOR = "nvim";
     VISUAL = "nvim";
     NVIM_APPNAME = "nvim";
@@ -36,29 +35,23 @@
   ];
 
   ##################################################
-  # WAYBAR
-  # - კონფიგი: Home Manager
-  # - გაშვება: systemd user service (არა exec-once)
+  # WAYBAR — systemd user service (სწორი გზა)
   ##################################################
   programs.waybar = {
     enable = true;
-
-    # HM არ ქმნის საკუთარ waybar.service-ს
-    # (Waybar უკვე systemd user service-ად გაქვს გააზრებული)
-    systemd.enable = false;
+    systemd.enable = true;
   };
 
   ##################################################
-  # GRAPHICAL SESSION FIX (DM გარეშე)
+  # GRAPHICAL SESSION MARKER (აკლებული რგოლი)
   #
-  # ეს არის აკლებული რგოლი:
-  # - user systemd-ს ვეუბნებით, რომ graphical session დაიწყო
-  # - შედეგად ირთვება graphical-session.target
-  # - და Waybar-ის systemd service სტარტდება ნორმალურად
+  # ეს unit არაფერს უშვებს გრაფიკულად.
+  # ის უბრალოდ systemd-ს ეუბნება:
+  # "graphical session უკვე არსებობს".
   ##################################################
-  systemd.user.services.graphical-session-fix = {
+  systemd.user.services.graphical-session-marker = {
     Unit = {
-      Description = "Activate graphical-session.target (no DM)";
+      Description = "Mark graphical session as active";
       After = [ "default.target" ];
     };
 
@@ -76,13 +69,7 @@
   ##################################################
   # GIT
   ##################################################
-  programs.git = {
-    enable = true;
-    settings = {
-      user.name = "avto";
-      user.email = "avto@example.com";
-    };
-  };
+  programs.git.enable = true;
 
   ##################################################
   # REQUIRED BY HOME-MANAGER
