@@ -23,6 +23,7 @@
   imports = [
     ./zsh/zsh.nix
     ./config/config.nix
+    ./systemd/graphical-session-bridge.nix
   ];
 
   ##################################################
