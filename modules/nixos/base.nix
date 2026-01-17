@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   # ----------------------------------------
@@ -7,7 +7,7 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # ----------------------------------------
-  # Allow unfree packages (REQUIRED for vscode, chrome, etc.)
+  # Allow unfree packages
   # ----------------------------------------
   nixpkgs.config.allowUnfree = true;
 
@@ -21,4 +21,13 @@
   zramSwap.enable = true;
 
   programs.zsh.enable = true;
+
+  # ----------------------------------------
+  # TTY autologin (DM გარეშე, მაგრამ დეკლარაციულად)
+  #
+  # ეს არის ის, რაც გვაძლევს user systemd-ს,
+  # რომ hyprland-autostart.user service გაეშვას ავტომატურად.
+  # ----------------------------------------
+  services.getty.autologinUser = "avto";
 }
+

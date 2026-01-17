@@ -27,7 +27,7 @@
   ];
 
   ##################################################
-  # PACKAGES (NO WAYBAR HERE)
+  # PACKAGES
   ##################################################
   home.packages = with pkgs; [
     git
@@ -36,13 +36,15 @@
   ];
 
   ##################################################
-  # WAYBAR — CORRECT, DECLARATIVE WAY
+  # WAYBAR — CONFIG managed by HM, START managed by NixOS systemd
   ##################################################
   programs.waybar = {
     enable = true;
 
-    # თუ დაგჭირდება debug:
-    # systemd.enable = true;  # default = true
+    # მნიშვნელოვანია:
+    # HM-მა რომ არ შექმნას საკუთარი waybar.service (ჩვენ უკვე გვაქვს სისტემური),
+    # ამით ვუთიშავთ HM-ის systemd integration-ს.
+    systemd.enable = false;
   };
 
   ##################################################
