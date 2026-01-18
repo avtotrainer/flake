@@ -26,11 +26,13 @@
   programs.hyprland = {
     enable = true;
 
-    # Hyprland-ისთვის env-ების იძულებითი მიწოდება
-    extraConfig = ''
-      env = XCURSOR_THEME,Bibata-Modern-Ice
-      env = XCURSOR_SIZE,24
-    '';
+    settings = {
+      env = [
+        "XCURSOR_THEME,Bibata-Modern-Ice"
+        "XCURSOR_SIZE,24"
+      ];
+    };
+
   };
   ##################################################
   # DISPLAY MANAGER — SDDM (WAYLAND MODE)
