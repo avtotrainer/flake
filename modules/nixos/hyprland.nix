@@ -23,11 +23,6 @@
   ##################################################
   programs.hyprland.enable = true;
 
-  programs.hyprland = {
-    enable = true;
-
-
-  };
   ##################################################
   # DISPLAY MANAGER — SDDM (WAYLAND MODE)
   #
