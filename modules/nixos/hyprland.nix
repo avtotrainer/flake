@@ -21,17 +21,11 @@
   # Hyprland რეგისტრირდება როგორც Wayland session,
   # რომელსაც display manager გამოიყენებს.
   ##################################################
-  # programs.hyprland.enable = true;
+  programs.hyprland.enable = true;
 
   programs.hyprland = {
     enable = true;
 
-    settings = {
-      env = [
-        "XCURSOR_THEME,Bibata-Modern-Ice"
-        "XCURSOR_SIZE,24"
-      ];
-    };
 
   };
   ##################################################
@@ -97,9 +91,10 @@
     bibata-cursors
   ];
 
-  environment.variables = {
-    XCURSOR_THEME = "Bibata-Modern-Ice";
-    XCURSOR_SIZE = "24";
-  };
+  
+  environment.systemPackages = with pkgs; [
+    bibata-cursors
+  ];
+
 }
 
