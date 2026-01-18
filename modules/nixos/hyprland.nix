@@ -21,8 +21,17 @@
   # Hyprland რეგისტრირდება როგორც Wayland session,
   # რომელსაც display manager გამოიყენებს.
   ##################################################
-  programs.hyprland.enable = true;
+  # programs.hyprland.enable = true;
 
+  programs.hyprland = {
+    enable = true;
+
+    # Hyprland-ისთვის env-ების იძულებითი მიწოდება
+    extraConfig = ''
+      env = XCURSOR_THEME,Bibata-Modern-Ice
+      env = XCURSOR_SIZE,24
+    '';
+  };
   ##################################################
   # DISPLAY MANAGER — SDDM (WAYLAND MODE)
   #
@@ -82,5 +91,13 @@
   # systemd მთლიანად მართავს lifecycle-ს:
   # graphical-session.target → waybar.service
   ##################################################
+  environment.systemPackages = with pkgs; [
+    bibata-cursors
+  ];
+
+  environment.variables = {
+    XCURSOR_THEME = "Bibata-Modern-Ice";
+    XCURSOR_SIZE = "24";
+  };
 }
 
