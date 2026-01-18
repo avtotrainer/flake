@@ -2,46 +2,48 @@
 
 {
   ##################################################
-  # WAYLAND-ONLY SYSTEM
+  # XSERVER INFRASTRUCTURE (REQUIRED FOR SDDM)
   #
-  # Xorg მთლიანად გამორთულია.
-  # სისტემა მუშაობს მხოლოდ Wayland-ზე.
+  # მნიშვნელოვანია:
+  # - ეს არ ნიშნავს, რომ Xorg სესია გამოიყენება
+  # - ეს ნიშნავს, რომ display manager-ს (SDDM)
+  #   აქვს სრული systemd-logind / PAM ინფრასტრუქტურა
+  #
+  # თუ ეს falseა:
+  # - SDDM ვერ ქმნის სრულფასოვან graphical session-ს
+  # - graphical-session.target არ აქტიურდება
   ##################################################
-  services.xserver.enable = false;
+  services.xserver.enable = true;
 
   ##################################################
-  # HYPRLAND (Wayland compositor)
+  # HYPRLAND (WAYLAND COMPOSITOR)
   #
-  # Hyprland ჩაირთვება როგორც გრაფიკული სესია,
-  # რომელსაც მართავს display manager (SDDM).
+  # Hyprland რეგისტრირდება როგორც Wayland session,
+  # რომელსაც display manager გამოიყენებს.
   ##################################################
   programs.hyprland.enable = true;
 
   ##################################################
-  # DISPLAY MANAGER — SDDM (Wayland)
+  # DISPLAY MANAGER — SDDM (WAYLAND MODE)
   #
-  # რატომ SDDM:
-  # - systemd-logind სრული ინტეგრაცია
-  # - PAM-based login
-  # - systemd --user lifecycle
-  # - graphical-session.target ავტომატური აქტივაცია
-  #
-  # მნიშვნელოვანია:
-  # - Hyprland უნდა გაეშვას SDDM-ის მიერ
-  # - არ უნდა არსებობდეს parallel/manual launch
+  # როლი:
+  # - ახორციელებს login-ს (PAM)
+  # - ააქტიურებს systemd --user სესიას
+  # - systemd-logind-ის მეშვეობით
+  #   ავტომატურად რთავს graphical-session.target-ს
   ##################################################
   services.displayManager.sddm = {
     enable = true;
 
-    # Wayland backend SDDM-ისთვის
+    # SDDM იყენებს Wayland backend-ს
     wayland.enable = true;
   };
 
   ##################################################
   # DEFAULT GRAPHICAL SESSION
   #
-  # SDDM-ს ეუბნება, რომ ავტორიზაციის შემდეგ
-  # უნდა გაეშვას Hyprland სესია.
+  # SDDM-ს ვეუბნებით:
+  # "ავტორიზაციის შემდეგ გაუშვი Hyprland"
   ##################################################
   services.displayManager.defaultSession = "hyprland";
 
@@ -49,9 +51,9 @@
   # AUTOLOGIN (SDDM-ით, არა TTY-დან)
   #
   # შედეგი:
-  # - არ ჩანს login screen
-  # - მაგრამ login მაინც ხდება PAM-ის გზით
-  # - systemd --user სესია სრულად სწორად ირთვება
+  # - ეკრანი პირდაპირ შედის Hyprland-ში
+  # - მაგრამ login მაინც ხდება სწორად:
+  #   PAM → systemd-logind → systemd --user
   ##################################################
   services.displayManager.autoLogin = {
     enable = true;
@@ -59,14 +61,29 @@
   };
 
   ##################################################
-  # IMPORTANT GUARANTEE
+  # SESSION REGISTRATION FOR SDDM
   #
-  # greetd არ არის გამოყენებული.
-  # არც enable=true, არც enable=false.
+  # ეს უზრუნველყოფს, რომ:
+  # - hyprland.desktop რეალურად არსებობს
+  # - SDDM ხედავს Hyprland-ს როგორც session-ს
   #
-  # ეს ნიშნავს:
-  # - სისტემაში არსებობს მხოლოდ ერთი DM: SDDM
-  # - არ არის კონფლიქტი session lifecycle-ში
+  # ამის გარეშე ხშირად ხდება:
+  # - Hyprland თითქოს ირთვება
+  # - მაგრამ არა როგორც "official session"
+  ##################################################
+  services.xserver.displayManager.sessionPackages = [
+    pkgs.hyprland
+  ];
+
+  ##################################################
+  # GUARANTEES / CONSTRAINTS
+  #
+  # - greetd არ გამოიყენება
+  # - exec-once არ გამოიყენება
+  # - graphical-session bridge არ არსებობს
+  #
+  # systemd მთლიანად მართავს lifecycle-ს:
+  # graphical-session.target → waybar.service
   ##################################################
 }
 
