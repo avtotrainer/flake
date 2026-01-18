@@ -82,9 +82,6 @@
   # systemd მთლიანად მართავს lifecycle-ს:
   # graphical-session.target → waybar.service
   ##################################################
-  environment.systemPackages = with pkgs; [
-    bibata-cursors
-  ];
 
   
   environment.systemPackages = with pkgs; [
