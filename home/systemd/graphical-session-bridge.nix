@@ -2,39 +2,38 @@
 
 {
   ##################################################
-  # HYPRLAND → GRAPHICAL SESSION BRIDGE
+  # GRAPHICAL SESSION BRIDGE (SDDM AUTOLOGIN)
   #
-  # როლი:
-  # - systemd-ს ეუბნება, რომ გრაფიკული სესია აქტიურია
+  # რატომ არის საჭირო:
+  # - sddm-autologin სესია systemd-სთვის
+  #   ავტომატურად არ ითვლება "graphical session"-ად
+  # - ამიტომ graphical-session.target არ აქტიურდება
   #
-  # მნიშვნელოვანი:
-  # - Hyprland თვითონ არ ააქტიურებს systemd target-ებს
-  # - ამიტომ საჭიროა ეს bridge service
+  # რას აკეთებს ეს service:
+  # - ერთხელ ეშვება user session-ის დაწყებისას
+  # - systemd-ს ეუბნება:
+  #   "გრაფიკული სესია აქტიურია"
+  #
+  # რას არ აკეთებს:
+  # - არ უშვებს Waybar-ს
+  # - არ უშვებს Hyprland-ს
+  # - არ არღვევს systemd lifecycle-ს
   ##################################################
-  systemd.user.services.hyprland-graphical-session = {
+  systemd.user.services.graphical-session-bridge = {
     ##################################################
     # UNIT
     ##################################################
     Unit = {
-      Description = "Activate graphical-session.target (Hyprland bridge)";
-
-      # ⚠️ შეცვლილია:
-      # ადრე იყო მიბმული hyprland-session.target-ზე,
-      # რომელიც systemd-ში რეალურად არ არსებობს.
-      #
-      # ახლა Unit-ს არ აქვს დამოკიდებულებები —
-      # ეს service უბრალოდ trigger-ია.
+      Description = "Activate graphical-session.target (SDDM autologin bridge)";
     };
 
     ##################################################
     # SERVICE
     ##################################################
     Service = {
-      # oneshot — ერთხელ უნდა გაეშვას და დასრულდეს
       Type = "oneshot";
 
-      # systemd-ს ვეუბნებით:
-      # „გრაფიკული სესია დაწყებულია“
+      # პირდაპირ და მკაფიო სიგნალი systemd-სთვის
       ExecStart =
         "${pkgs.systemd}/bin/systemctl --user start graphical-session.target";
     };
@@ -43,12 +42,7 @@
     # INSTALL
     ##################################################
     Install = {
-      # ⚠️ შეცვლილია:
-      # ადრე: WantedBy = hyprland-session.target (არარსებული)
-      #
-      # ახლა:
-      # - ებმება default.target-ზე
-      # - user session-ის დაწყებისას ავტომატურად გაეშვება
+      # user session-ის დაწყებისას ერთხელ გაეშვება
       WantedBy = [ "default.target" ];
     };
   };
