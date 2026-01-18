@@ -34,8 +34,6 @@
   ##################################################
   services.displayManager.sddm = {
     enable = true;
-
-    # SDDM იყენებს Wayland backend-ს
     wayland.enable = true;
   };
 
@@ -63,15 +61,14 @@
   ##################################################
   # SESSION REGISTRATION FOR SDDM
   #
+  # NixOS 26.05+:
+  # - sessionPackages გადატანილია services.displayManager ქვეშ
+  #
   # ეს უზრუნველყოფს, რომ:
   # - hyprland.desktop რეალურად არსებობს
   # - SDDM ხედავს Hyprland-ს როგორც session-ს
-  #
-  # ამის გარეშე ხშირად ხდება:
-  # - Hyprland თითქოს ირთვება
-  # - მაგრამ არა როგორც "official session"
   ##################################################
-  services.xserver.displayManager.sessionPackages = [
+  services.displayManager.sessionPackages = [
     pkgs.hyprland
   ];
 
