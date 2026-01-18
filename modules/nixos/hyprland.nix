@@ -4,16 +4,16 @@
   services.xserver.enable = true;
 
   programs.hyprland = {
-  enable = true;
-  withUWSM = true;
-};
+    enable = true;
+    withUWSM = true;
+  };
 
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
   };
 
-  services.displayManager.defaultSession = "hyprland";
+  services.displayManager.defaultSession = "hyprland-uwsm";
 
   services.displayManager.autoLogin = {
     enable = true;
