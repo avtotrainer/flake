@@ -27,11 +27,6 @@
   boot.loader.systemd-boot.configurationLimit = lib.mkForce 20;
   boot.loader.timeout = lib.mkForce 3;
 
-  # SAFE boot entry: Hyprland/Waybar autostart გამორთული
-  specialisation.safe.configuration = {
-    systemd.user.services.hyprland-autostart.wantedBy = lib.mkForce [ ];
-    systemd.user.services.waybar.wantedBy = lib.mkForce [ ];
-  };
 
   system.stateVersion = "25.11";
 }
