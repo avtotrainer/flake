@@ -4,24 +4,33 @@
   ##################################################
   # HYPRLAND → GRAPHICAL SESSION BRIDGE
   #
-  # რას აკეთებს:
-  # - როცა Hyprland session მზად არის
-  # - systemd-ს ეუბნება, რომ graphical-session აქტიურია
+  # როლი:
+  # - systemd-ს ეუბნება, რომ გრაფიკული სესია აქტიურია
   #
-  # რას არ აკეთებს:
-  # - არაფერს უშვებს
-  # - არაფერს აჩენს ეკრანზე
+  # მნიშვნელოვანი:
+  # - Hyprland თვითონ არ ააქტიურებს systemd target-ებს
+  # - ამიტომ საჭიროა ეს bridge service
   ##################################################
   systemd.user.services.hyprland-graphical-session = {
+    ##################################################
+    # UNIT
+    ##################################################
     Unit = {
-      Description = "Activate graphical-session.target for Hyprland";
+      Description = "Activate graphical-session.target (Hyprland bridge)";
 
-      # Hyprland session უნდა არსებობდეს
-      After = [ "hyprland-session.target" ];
-      PartOf = [ "hyprland-session.target" ];
+      # ⚠️ შეცვლილია:
+      # ადრე იყო მიბმული hyprland-session.target-ზე,
+      # რომელიც systemd-ში რეალურად არ არსებობს.
+      #
+      # ახლა Unit-ს არ აქვს დამოკიდებულებები —
+      # ეს service უბრალოდ trigger-ია.
     };
 
+    ##################################################
+    # SERVICE
+    ##################################################
     Service = {
+      # oneshot — ერთხელ უნდა გაეშვას და დასრულდეს
       Type = "oneshot";
 
       # systemd-ს ვეუბნებით:
@@ -30,9 +39,17 @@
         "${pkgs.systemd}/bin/systemctl --user start graphical-session.target";
     };
 
+    ##################################################
+    # INSTALL
+    ##################################################
     Install = {
-      # Hyprland-ის ჩატვირთვაზე ავტომატურად ეშვება
-      WantedBy = [ "hyprland-session.target" ];
+      # ⚠️ შეცვლილია:
+      # ადრე: WantedBy = hyprland-session.target (არარსებული)
+      #
+      # ახლა:
+      # - ებმება default.target-ზე
+      # - user session-ის დაწყებისას ავტომატურად გაეშვება
+      WantedBy = [ "default.target" ];
     };
   };
 }
