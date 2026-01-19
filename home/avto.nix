@@ -17,6 +17,7 @@
 
   imports = [
     ./zsh/zsh.nix
+    ./direnv/direnv.nix
     ./config/config.nix
   ];
 
