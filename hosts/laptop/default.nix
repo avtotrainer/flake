@@ -27,6 +27,11 @@
   boot.loader.systemd-boot.configurationLimit = lib.mkForce 20;
   boot.loader.timeout = lib.mkForce 3;
 
+  environment.systemPackages = with pkgs; [
+    python312
+    python314
+  ];
+
 
   system.stateVersion = "25.11";
 }
