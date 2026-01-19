@@ -17,18 +17,15 @@
       ];
     };
 
-    # ── UI / Prompt ───────────────────────────────
     initContent = ''
-      # Powerlevel10k theme (standalone)
+      # ── direnv hook ──────────────────────────────
+      eval "$(direnv hook zsh)"
+
+      # ── Powerlevel10k theme ──────────────────────
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
 
-      # User-selected prompt config (managed by Home Manager)
+      # User-selected prompt config
       source ~/.p10k.zsh
-    '';
-
-    # ── Environment hooks ─────────────────────────
-    initExtra = ''
-      eval "$(direnv hook zsh)"
     '';
   };
 
