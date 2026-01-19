@@ -30,6 +30,7 @@
   environment.systemPackages = with pkgs; [
     python312
     python314
+    direnv
   ];
 
 
