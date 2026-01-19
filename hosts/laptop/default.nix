@@ -31,6 +31,7 @@
     python312
     python314
     direnv
+    gnumake
   ];
 
 
