@@ -3,7 +3,8 @@
 {
   imports = [
     ./hardware.nix
-
+    ./wallpaper.nix
+    
     ../../modules/nixos/base.nix
     ../../modules/nixos/boot-silent.nix
     ../../modules/nixos/power.nix
