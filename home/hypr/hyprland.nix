@@ -13,7 +13,7 @@
         "XDG_CURRENT_DESKTOP,Hyprland"
         "WLR_NO_HARDWARE_CURSORS,1"
         "LIBVA_DRIVER_NAME,iHD"
-        "MOZ_ENABLE_WAYLAND,1"
+        "MOZ_ENABLE_WAYLAND,2"
         "QT_QPA_PLATFORM,wayland"
         "GDK_BACKEND,wayland"
       ];
@@ -135,7 +135,7 @@
         "SUPER, K, movefocus, u"
         "SUPER, J, movefocus, d"
 
-        # Resize submap (არ ჭამს ჩვეულებრივ ისრებს)
+        # Resize submap
         "SUPER, R, submap, resize"
 
         # System
@@ -167,7 +167,9 @@
         "SUPER SHIFT, 0, movetoworkspace, 10"
       ];
 
-      # resize რეჟიმი: მხოლოდ SUPER+ისრები (ჩვეულებრივი ისრები აღარ იჭრება)
+      ############################
+      # SUBMAPS
+      ############################
       submap = {
         resize = {
           bind = [
@@ -175,7 +177,7 @@
             "SUPER, right, resizeactive, 20 0"
             "SUPER, up,    resizeactive, 0 -20"
             "SUPER, down,  resizeactive, 0 20"
-            ", escape, submap, reset"
+            ", Escape, submap, reset"
           ];
         };
       };
