@@ -4,6 +4,9 @@
   programs.waybar = {
     enable = true;
 
+     # ⬅️ აქ არის მთავარი ფიქსი
+    style = ./style.css;
+
     settings = {
       mainBar = {
         layer = "top";
