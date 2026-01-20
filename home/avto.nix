@@ -20,7 +20,6 @@
     ./direnv/direnv.nix
     ./config/config.nix
     ./alacritty/alacritty.nix
-    ./hypr/hyprland.nix 
     ./waybar/config.nix
 
   ];
