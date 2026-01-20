@@ -1,90 +1,100 @@
+{ config, ... }:
+
 {
-  layer = "top";
-  position = "top";
+  programs.waybar = {
+    enable = true;
 
-  modules-left = [
-    "hyprland/workspaces"
-    "hyprland/window"
-  ];
+    settings = {
+      mainBar = {
+        layer = "top";
+        position = "top";
 
-  modules-center = [
-    "clock"
-  ];
+        modules-left = [
+          "hyprland/workspaces"
+          "hyprland/window"
+        ];
 
-  modules-right = [
-    "cpu"
-    "memory"
-    "network"
-    "custom/separator"
-    "pulseaudio"
-    "custom/separator"
-    "battery"
-    "custom/separator"
-    "custom/kbd"
-  ];
+        modules-center = [
+          "clock"
+        ];
 
-  clock = {
-    format = "{:%Y-%m-%d %H:%M:%S}";
-    tooltip = true;
-  };
+        modules-right = [
+          "cpu"
+          "memory"
+          "network"
+          "custom/separator"
+          "pulseaudio"
+          "custom/separator"
+          "battery"
+          "custom/separator"
+          "custom/kbd"
+        ];
 
-  cpu = {
-    format = " {usage}%";
-    interval = 2;
-  };
+        clock = {
+          format = "{:%Y-%m-%d %H:%M:%S}";
+          tooltip = true;
+        };
 
-  memory = {
-    format = " {used}/{total}MB";
-    interval = 2;
-  };
+        cpu = {
+          format = " {usage}%";
+          interval = 2;
+        };
 
-  network = {
-    format-wifi = "";
-    format-ethernet = "";
-    format-disabled = "✈";
-    format-disconnected = "";
-    tooltip = true;
+        memory = {
+          format = " {used}/{total}MB";
+          interval = 2;
+        };
 
-    tooltip-format-wifi = "SSID: {essid}\nSignal: {signalStrength}%";
-    tooltip-format-ethernet = "IP: {ipaddr}";
+        network = {
+          format-wifi = "";
+          format-ethernet = "";
+          format-disabled = "✈";
+          format-disconnected = "";
+          tooltip = true;
 
-    on-click = "~/.config/waybar/scripts/wifi-menu.sh";
-  };
+          tooltip-format-wifi = "SSID: {essid}\nSignal: {signalStrength}%";
+          tooltip-format-ethernet = "IP: {ipaddr}";
 
-  "custom/separator" = {
-    format = "|";
-    tooltip = false;
-  };
+          on-click = "~/.config/waybar/scripts/wifi-menu.sh";
+        };
 
-  "custom/kbd" = {
-    exec = "~/.config/waybar/scripts/kbdc.sh";
-    interval = 1;
-    return-type = "json";
-    on-click = "~/.config/waybar/scripts/kbd-togle.sh";
-    tooltip = "Click to switch language";
-  };
+        "custom/separator" = {
+          format = "|";
+          tooltip = false;
+        };
 
-  pulseaudio = {
-    format = "  {volume}%";
-    format-muted = " Muted";
-    on-click = "pavucontrol";
-  };
+        "custom/kbd" = {
+          exec = "~/.config/waybar/scripts/kbdc.sh";
+          interval = 1;
+          return-type = "json";
+          on-click = "~/.config/waybar/scripts/kbd-togle.sh";
+          tooltip = "Click to switch language";
+        };
 
-  battery = {
-    bat = "BAT0";
-    interval = 30;
+        pulseaudio = {
+          format = "  {volume}%";
+          format-muted = " Muted";
+          on-click = "pavucontrol";
+        };
 
-    states = {
-      good = 80;
-      warning = 30;
-      critical = 15;
+        battery = {
+          bat = "BAT0";
+          interval = 30;
+
+          states = {
+            good = 80;
+            warning = 30;
+            critical = 15;
+          };
+
+          format = "{icon}";
+          format-charging = "🔌 {icon}";
+          format-full = "🔋 ";
+          format-icons = [ "" "" "" "" "" ];
+          tooltip = true;
+        };
+      };
     };
-
-    format = "{icon}";
-    format-charging = "🔌 {icon}";
-    format-full = "🔋 ";
-    format-icons = [ "" "" "" "" "" ];
-    tooltip = true;
   };
 }
 
