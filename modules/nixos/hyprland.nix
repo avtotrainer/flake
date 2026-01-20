@@ -27,7 +27,7 @@
   };
 
   #############################################
-  # CURSOR (SYSTEM-WIDE, CLEAN)
+  # CURSOR (SYSTEM-WIDE)
   #############################################
   environment.systemPackages = with pkgs; [
     bibata-cursors
@@ -39,11 +39,11 @@
   };
 
   #############################################
-  # HYPRLAND CONFIG (SYSTEM LAYER — FINAL)
+  # HYPRLAND CONFIG (SYSTEM LAYER)
   #############################################
   environment.etc."xdg/hypr/hyprland.conf".text = ''
     #############################################
-    # HYPRLAND CONFIG — FINAL MERGED VERSION
+    # HYPRLAND CONFIG — STABLE (INTEL SAFE)
     #############################################
 
     ### ENVIRONMENT
@@ -82,39 +82,49 @@
     }
 
     #############################################
-    # GENERAL
+    # GENERAL (PIXMAN-SAFE)
     #############################################
     general {
       gaps_in = 4
       gaps_out = 8
       border_size = 2
-      allow_tearing = false
+
+      # FIX: pixman invalid rectangle crash
+      allow_tearing = true
+      extend_border_grab_area = 0
+
       hover_icon_on_border = true
-      extend_border_grab_area = 15
     }
 
     #############################################
-    # DECORATION
+    # DECORATION (PIXMAN-SAFE)
     #############################################
     decoration {
       rounding = 8
-      blur { enabled = false }
-      shadow { enabled = false }
+
+      blur {
+        enabled = false
+      }
+
+      shadow {
+        enabled = false
+      }
+
       active_opacity = 1.0
-      inactive_opacity = 0.8
+      inactive_opacity = 1.0
     }
 
     #############################################
-    # ANIMATIONS
+    # ANIMATIONS (SINGLE BLOCK)
     #############################################
     animations {
       enabled = yes
-      animation = windows, 1, 5, default
-      animation = fade,    1, 3, default
-      animation = global,  1, 7, default
+      animation = windows,   1, 5, default
+      animation = fade,      1, 3, default
+      animation = global,    1, 7, default
       animation = windowsIn, 1, 6, default, popin
-      animation = fadeIn, 1, 6, default
-      animation = fadeOut, 1, 6, default
+      animation = fadeIn,    1, 6, default
+      animation = fadeOut,   1, 6, default
     }
 
     #############################################
@@ -131,14 +141,17 @@
     monitor = eDP-1,preferred,auto,1
 
     #############################################
-    # BINDS — UNTOUCHED
+    # BINDS (UNCHANGED)
     #############################################
     bind = SUPER, RETURN, exec, $terminal
-    bind = SUPER, B, exec, $browser
-    bind = SUPER, F, exec, $fileManager
+    bind = SUPER, B,      exec, $browser
+    bind = SUPER, F,      exec, $fileManager
 
     bind = SUPER, C, killactive
-    bind = SUPER SHIFT, Q, exit
+
+    # FIX: Hyprland has no `exit`
+    bind = SUPER SHIFT, Q, exec, uwsm stop
+
     bind = SUPER, V, togglefloating
 
     bind = SUPER, H, movefocus, l
@@ -149,7 +162,7 @@
     bind = SUPER, R, exec, $menu
 
     #############################################
-    # RESIZE MODE (SAFE)
+    # RESIZE MODE
     #############################################
     bind = SUPER SHIFT, R, submap, resize
 
