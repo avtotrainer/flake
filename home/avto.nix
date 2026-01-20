@@ -19,6 +19,8 @@
     ./zsh/zsh.nix
     ./direnv/direnv.nix
     ./config/config.nix
+    ./config/alacritty/alacritty.nix
+
   ];
 
   home.packages = with pkgs; [
