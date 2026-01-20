@@ -5,7 +5,7 @@
     enable = true;
 
     ########################################
-    # STRUCTURED SETTINGS (SAFE ZONE)
+    # STRUCTURED SETTINGS
     ########################################
     settings = {
 
@@ -30,25 +30,20 @@
       "$menu"        = "wofi --show drun";
 
       ############################
-      # INPUT  (CRITICAL PART)
+      # INPUT
       ############################
       input = {
         kb_layout  = "us,ge";
         kb_variant = ",ergonomic";
         kb_options = "grp:win_space_toggle";
 
-        # ❗ ESC-ის პრობლემის რეალური მიზეზი აქ იყო
         follow_mouse = 0;
-
         repeat_delay = 300;
         repeat_rate  = 35;
-
-        force_no_accel = true;
 
         touchpad = {
           natural_scroll = true;
           tap-to-click   = true;
-          scroll_factor  = 0.8;
         };
       };
 
@@ -59,44 +54,6 @@
         gaps_in  = 4;
         gaps_out = 8;
         border_size = 2;
-        allow_tearing = false;
-        hover_icon_on_border = true;
-        extend_border_grab_area = 15;
-      };
-
-      ############################
-      # DECORATION
-      ############################
-      decoration = {
-        rounding = 8;
-        active_opacity   = 1.0;
-        inactive_opacity = 0.8;
-
-        blur.enabled   = false;
-        shadow.enabled = false;
-      };
-
-      ############################
-      # ANIMATIONS
-      ############################
-      animations = {
-        enabled = true;
-        animation = [
-          "windows, 1, 5, default"
-          "fade, 1, 3, default"
-          "global, 1, 7, default"
-          "windowsIn, 1, 6, default, popin"
-          "fadeIn, 1, 6, default"
-          "fadeOut, 1, 6, default"
-        ];
-      };
-
-      ############################
-      # LAYOUT
-      ############################
-      dwindle = {
-        preserve_split = true;
-        force_split = 2;
       };
 
       ############################
@@ -116,15 +73,12 @@
         "SUPER, F, exec, $fileManager"
         "SUPER, D, exec, $menu"
 
-        # Window control
+        # Window
         "SUPER, C, killactive"
         "SUPER SHIFT, Q, exit"
         "SUPER, V, togglefloating"
 
-        # 🔐 GLOBAL ESC — ყოველთვის მუშაობს
-        ", Escape, submap, reset"
-
-        # Focus (i3-style)
+        # Focus
         "SUPER, H, movefocus, l"
         "SUPER, L, movefocus, r"
         "SUPER, K, movefocus, u"
@@ -145,7 +99,7 @@
         "SUPER, 9, workspace, 9"
         "SUPER, 0, workspace, 10"
 
-        # Move window to workspace
+        # Move window
         "SUPER SHIFT, 1, movetoworkspace, 1"
         "SUPER SHIFT, 2, movetoworkspace, 2"
         "SUPER SHIFT, 3, movetoworkspace, 3"
@@ -156,10 +110,6 @@
         "SUPER SHIFT, 8, movetoworkspace, 8"
         "SUPER SHIFT, 9, movetoworkspace, 9"
         "SUPER SHIFT, 0, movetoworkspace, 10"
-
-        # System
-        "CTRL ALT, RETURN, exec, systemctl poweroff"
-        "CTRL ALT, DELETE, exec, systemctl reboot"
       ];
 
       ############################
@@ -169,13 +119,12 @@
         "hyprpaper"
         "nm-applet"
         "blueman-applet"
-        "systemctl --user restart wireplumber"
         "swww-daemon"
       ];
     };
 
     ########################################
-    # RAW HYPRLAND DSL (SUBMAP)
+    # SUBMAP (ESC ONLY HERE)
     ########################################
     extraConfig = ''
       submap = resize
