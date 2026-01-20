@@ -1,6 +1,19 @@
 { config, ... }:
 
 {
+  # ─────────────────────────────────────────────
+  # Waybar scripts (source of truth)
+  # ─────────────────────────────────────────────
+  xdg.configFile."waybar/scripts/kbdc.sh" = {
+    source = ./scripts/kbdc.sh;
+    executable = true;
+  };
+
+  xdg.configFile."waybar/scripts/kbd-toggle.sh" = {
+    source = ./scripts/kbd-toggle.sh;
+    executable = true;
+  };
+
   programs.waybar = {
     enable = true;
 
