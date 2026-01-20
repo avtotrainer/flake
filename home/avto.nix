@@ -20,7 +20,7 @@
     ./direnv/direnv.nix
     ./config/config.nix
     ./alacritty/alacritty.nix
-    ./waybar/waybar.nix
+    ./waybar/config.nix
 
   ];
 
