@@ -122,18 +122,21 @@
         "SUPER, RETURN, exec, $terminal"
         "SUPER, B, exec, $browser"
         "SUPER, F, exec, $fileManager"
-        "SUPER, R, exec, $menu"
+        "SUPER, D, exec, $menu"
 
         # Window control
         "SUPER, C, killactive"
         "SUPER SHIFT, Q, exit"
         "SUPER, V, togglefloating"
 
-        # Focus movement
+        # Focus movement (i3-style)
         "SUPER, H, movefocus, l"
         "SUPER, L, movefocus, r"
         "SUPER, K, movefocus, u"
         "SUPER, J, movefocus, d"
+
+        # Resize submap (არ ჭამს ჩვეულებრივ ისრებს)
+        "SUPER, R, submap, resize"
 
         # System
         "CTRL ALT, RETURN, exec, systemctl poweroff"
@@ -162,18 +165,16 @@
         "SUPER SHIFT, 8, movetoworkspace, 8"
         "SUPER SHIFT, 9, movetoworkspace, 9"
         "SUPER SHIFT, 0, movetoworkspace, 10"
-
-        # Resize submap
-        "SUPER, R, submap, resize"
       ];
 
+      # resize რეჟიმი: მხოლოდ SUPER+ისრები (ჩვეულებრივი ისრები აღარ იჭრება)
       submap = {
         resize = {
           bind = [
-            ", left,  resizeactive, -20 0"
-            ", right, resizeactive, 20 0"
-            ", up,    resizeactive, 0 -20"
-            ", down,  resizeactive, 0 20"
+            "SUPER, left,  resizeactive, -20 0"
+            "SUPER, right, resizeactive, 20 0"
+            "SUPER, up,    resizeactive, 0 -20"
+            "SUPER, down,  resizeactive, 0 20"
             ", escape, submap, reset"
           ];
         };
