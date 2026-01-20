@@ -5,7 +5,7 @@
     enable = true;
 
     ########################################
-    # STRUCTURED SETTINGS (SAFE PART)
+    # STRUCTURED SETTINGS (SAFE ZONE)
     ########################################
     settings = {
 
@@ -30,16 +30,20 @@
       "$menu"        = "wofi --show drun";
 
       ############################
-      # INPUT
+      # INPUT  (CRITICAL PART)
       ############################
       input = {
         kb_layout  = "us,ge";
         kb_variant = ",ergonomic";
         kb_options = "grp:win_space_toggle";
 
-        follow_mouse = 1;
+        # ❗ ESC-ის პრობლემის რეალური მიზეზი აქ იყო
+        follow_mouse = 0;
+
         repeat_delay = 300;
         repeat_rate  = 35;
+
+        force_no_accel = true;
 
         touchpad = {
           natural_scroll = true;
@@ -103,44 +107,59 @@
       ];
 
       ############################
-      # GLOBAL KEYBINDS
+      # KEYBINDS
       ############################
       bind = [
+        # Apps
         "SUPER, RETURN, exec, $terminal"
         "SUPER, B, exec, $browser"
         "SUPER, F, exec, $fileManager"
         "SUPER, D, exec, $menu"
 
+        # Window control
         "SUPER, C, killactive"
         "SUPER SHIFT, Q, exit"
         "SUPER, V, togglefloating"
 
-        # 🔐 GLOBAL ESC — ALWAYS SAFE
+        # 🔐 GLOBAL ESC — ყოველთვის მუშაობს
         ", Escape, submap, reset"
 
-        # focus
+        # Focus (i3-style)
         "SUPER, H, movefocus, l"
         "SUPER, L, movefocus, r"
         "SUPER, K, movefocus, u"
         "SUPER, J, movefocus, d"
 
-        # resize entry
+        # Resize mode entry
         "SUPER, R, submap, resize"
 
-        # system
+        # Workspaces
+        "SUPER, 1, workspace, 1"
+        "SUPER, 2, workspace, 2"
+        "SUPER, 3, workspace, 3"
+        "SUPER, 4, workspace, 4"
+        "SUPER, 5, workspace, 5"
+        "SUPER, 6, workspace, 6"
+        "SUPER, 7, workspace, 7"
+        "SUPER, 8, workspace, 8"
+        "SUPER, 9, workspace, 9"
+        "SUPER, 0, workspace, 10"
+
+        # Move window to workspace
+        "SUPER SHIFT, 1, movetoworkspace, 1"
+        "SUPER SHIFT, 2, movetoworkspace, 2"
+        "SUPER SHIFT, 3, movetoworkspace, 3"
+        "SUPER SHIFT, 4, movetoworkspace, 4"
+        "SUPER SHIFT, 5, movetoworkspace, 5"
+        "SUPER SHIFT, 6, movetoworkspace, 6"
+        "SUPER SHIFT, 7, movetoworkspace, 7"
+        "SUPER SHIFT, 8, movetoworkspace, 8"
+        "SUPER SHIFT, 9, movetoworkspace, 9"
+        "SUPER SHIFT, 0, movetoworkspace, 10"
+
+        # System
         "CTRL ALT, RETURN, exec, systemctl poweroff"
         "CTRL ALT, DELETE, exec, systemctl reboot"
-      ];
-
-      ############################
-      # MEDIA KEYS
-      ############################
-      bindel = [
-        ",XF86MonBrightnessUp, exec, brightnessctl set +10%"
-        ",XF86MonBrightnessDown, exec, brightnessctl set 10%-"
-        ",XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-        ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-        ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
       ];
 
       ############################
@@ -156,7 +175,7 @@
     };
 
     ########################################
-    # RAW HYPRLAND DSL (REQUIRED FOR SUBMAP)
+    # RAW HYPRLAND DSL (SUBMAP)
     ########################################
     extraConfig = ''
       submap = resize
