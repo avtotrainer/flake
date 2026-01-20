@@ -42,83 +42,159 @@
   # HYPRLAND CONFIG (SYSTEM LAYER)
   #############################################
   environment.etc."xdg/hypr/hyprland.conf".text = ''
-    #############################################
-    # HYPRLAND CONFIG — FINAL / STABLE
-    #############################################
+#############################################
+# HYPRLAND CONFIG — FINAL / STABLE
+#############################################
 
-    ### ENVIRONMENT
-    env = XDG_CURRENT_DESKTOP,Hyprland
-    env = WLR_NO_HARDWARE_CURSORS,1
-    env = LIBVA_DRIVER_NAME,iHD
-    env = MOZ_ENABLE_WAYLAND,1
-    env = QT_QPA_PLATFORM,wayland
-    env = GDK_BACKEND,wayland
+### ENVIRONMENT
+env = XDG_CURRENT_DESKTOP,Hyprland
+env = WLR_NO_HARDWARE_CURSORS,1
+env = LIBVA_DRIVER_NAME,iHD
+env = MOZ_ENABLE_WAYLAND,1
+env = QT_QPA_PLATFORM,wayland
+env = GDK_BACKEND,wayland
 
-    #############################################
-    # APPLICATION VARIABLES
-    #############################################
-    $terminal = alacritty
-    $browser = google-chrome-stable
-    $fileManager = thunar
-    $menu = wofi --show drun
+#############################################
+# APPLICATION VARIABLES
+#############################################
+$terminal = alacritty
+$browser = google-chrome-stable
+$fileManager = thunar
+$menu = wofi --show drun
 
-    #############################################
-    # INPUT
-    #############################################
-    input {
-      kb_layout = us,ge
-      kb_variant = ,ergonomic
-      kb_options = grp:win_space_toggle
+#############################################
+# INPUT
+#############################################
+input {
+  kb_layout = us,ge
+  kb_variant = ,ergonomic
+  kb_options = grp:win_space_toggle
 
-      follow_mouse = 1
-      repeat_delay = 300
-      repeat_rate  = 35
+  follow_mouse = 1
+  repeat_delay = 300
+  repeat_rate  = 35
 
-      touchpad {
-        natural_scroll = true
-        tap-to-click = true
-        scroll_factor = 0.8
-      }
-    }
+  touchpad {
+    natural_scroll = true
+    tap-to-click = true
+    scroll_factor = 0.8
+  }
+}
 
-    #############################################
-    # GENERAL (PIXMAN-SAFE)
-    #############################################
-    general {
-      gaps_in = 4
-      gaps_out = 8
-      border_size = 2
+#############################################
+# GENERAL (PIXMAN-SAFE)
+#############################################
+general {
+  gaps_in = 4
+  gaps_out = 8
+  border_size = 2
+  allow_tearing = true
+  extend_border_grab_area = 0
+  hover_icon_on_border = true
+}
 
-      allow_tearing = true
-      extend_border_grab_area = 0
-      hover_icon_on_border = true
-    }
+#############################################
+# DECORATION
+#############################################
+decoration {
+  rounding = 8
+  blur { enabled = false }
+  shadow { enabled = false }
+  active_opacity = 1.0
+  inactive_opacity = 1.0
+}
 
-    #############################################
-    # DECORATION (PIXMAN-SAFE)
-    #############################################
-    decoration {
-      rounding = 8
+#############################################
+# ANIMATIONS
+#############################################
+animations {
+  enabled = yes
+  animation = windows,   1, 5, default
+  animation = fade,      1, 3, default
+  animation = global,    1, 7, default
+  animation = windowsIn, 1, 6, default, popin
+  animation = fadeIn,    1, 6, default
+  animation = fadeOut,   1, 6, default
+}
 
-      blur {
-        enabled = false
-      }
+#############################################
+# LAYOUT
+#############################################
+dwindle {
+  preserve_split = true
+  force_split = 2
+}
 
-      shadow {
-        enabled = false
-      }
+#############################################
+# MONITOR
+#############################################
+monitor = eDP-1,preferred,auto,1
 
-      active_opacity = 1.0
-      inactive_opacity = 1.0
-    }
+#############################################
+# BINDS
+#############################################
+bind = SUPER, RETURN, exec, $terminal
+bind = SUPER, B,      exec, $browser
+bind = SUPER, F,      exec, $fileManager
+bind = SUPER, R,      exec, $menu
 
-    #############################################
-    # ANIMATIONS
-    #############################################
-    animations {
-      enabled = yes
-      animation = windows,   1, 5, default
-      animation = fade,      1, 3, default
-      animation = global,    1, 7, default
-      animation = windowsIn, 1, 6
+bind = SUPER, C, killactive
+bind = SUPER, V, togglefloating
+bind = SUPER SHIFT, Q, exec, uwsm stop
+
+bind = SUPER, H, movefocus, l
+bind = SUPER, L, movefocus, r
+bind = SUPER, K, movefocus, u
+bind = SUPER, J, movefocus, d
+
+#############################################
+# WORKSPACES
+#############################################
+bind = SUPER, 1, workspace, 1
+bind = SUPER, 2, workspace, 2
+bind = SUPER, 3, workspace, 3
+bind = SUPER, 4, workspace, 4
+bind = SUPER, 5, workspace, 5
+bind = SUPER, 6, workspace, 6
+bind = SUPER, 7, workspace, 7
+bind = SUPER, 8, workspace, 8
+bind = SUPER, 9, workspace, 9
+bind = SUPER, 0, workspace, 10
+
+bind = SUPER SHIFT, 1, movetoworkspace, 1
+bind = SUPER SHIFT, 2, movetoworkspace, 2
+bind = SUPER SHIFT, 3, movetoworkspace, 3
+bind = SUPER SHIFT, 4, movetoworkspace, 4
+bind = SUPER SHIFT, 5, movetoworkspace, 5
+bind = SUPER SHIFT, 6, movetoworkspace, 6
+bind = SUPER SHIFT, 7, movetoworkspace, 7
+bind = SUPER SHIFT, 8, movetoworkspace, 8
+bind = SUPER SHIFT, 9, movetoworkspace, 9
+bind = SUPER SHIFT, 0, movetoworkspace, 10
+
+#############################################
+# RESIZE MODE
+#############################################
+bind = SUPER SHIFT, R, submap, resize
+
+submap = resize
+  bind = , left,  resizeactive, -20 0
+  bind = , right, resizeactive, 20 0
+  bind = , up,    resizeactive, 0 -20
+  bind = , down,  resizeactive, 0 20
+  bind = , escape, submap, reset
+submap = reset
+
+#############################################
+# AUTOSTART
+#############################################
+exec-once = hyprpaper
+exec-once = nm-applet
+exec-once = blueman-applet
+exec-once = systemctl --user restart wireplumber
+
+exec-once = hyprctl dispatch exec "[workspace 2 silent"] $terminal
+exec-once = hyprctl dispatch exec "[workspace 1"] $browser
+'';
+}
 
