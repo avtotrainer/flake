@@ -25,6 +25,8 @@
     git
     neovim
     jq
+    tree
+    ripgrep
   ];
 
   programs.waybar.enable = true;
