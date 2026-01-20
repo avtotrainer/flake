@@ -129,6 +129,9 @@
         "SUPER SHIFT, Q, exit"
         "SUPER, V, togglefloating"
 
+        # 🔑 GLOBAL SAFETY: EXIT ANY SUBMAP
+        ", Escape, submap, reset"
+
         # Focus movement (i3-style)
         "SUPER, H, movefocus, l"
         "SUPER, L, movefocus, r"
