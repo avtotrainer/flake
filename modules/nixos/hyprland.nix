@@ -43,7 +43,7 @@
   #############################################
   environment.etc."xdg/hypr/hyprland.conf".text = ''
     #############################################
-    # HYPRLAND CONFIG — STABLE (INTEL SAFE)
+    # HYPRLAND CONFIG — FINAL / STABLE
     #############################################
 
     ### ENVIRONMENT
@@ -89,10 +89,8 @@
       gaps_out = 8
       border_size = 2
 
-      # FIX: pixman invalid rectangle crash
       allow_tearing = true
       extend_border_grab_area = 0
-
       hover_icon_on_border = true
     }
 
@@ -115,75 +113,12 @@
     }
 
     #############################################
-    # ANIMATIONS (SINGLE BLOCK)
+    # ANIMATIONS
     #############################################
     animations {
       enabled = yes
       animation = windows,   1, 5, default
       animation = fade,      1, 3, default
       animation = global,    1, 7, default
-      animation = windowsIn, 1, 6, default, popin
-      animation = fadeIn,    1, 6, default
-      animation = fadeOut,   1, 6, default
-    }
-
-    #############################################
-    # LAYOUT
-    #############################################
-    dwindle {
-      preserve_split = true
-      force_split = 2
-    }
-
-    #############################################
-    # MONITOR
-    #############################################
-    monitor = eDP-1,preferred,auto,1
-
-    #############################################
-    # BINDS (UNCHANGED)
-    #############################################
-    bind = SUPER, RETURN, exec, $terminal
-    bind = SUPER, B,      exec, $browser
-    bind = SUPER, F,      exec, $fileManager
-
-    bind = SUPER, C, killactive
-
-    # FIX: Hyprland has no `exit`
-    bind = SUPER SHIFT, Q, exec, uwsm stop
-
-    bind = SUPER, V, togglefloating
-
-    bind = SUPER, H, movefocus, l
-    bind = SUPER, L, movefocus, r
-    bind = SUPER, K, movefocus, u
-    bind = SUPER, J, movefocus, d
-
-    bind = SUPER, R, exec, $menu
-
-    #############################################
-    # RESIZE MODE
-    #############################################
-    bind = SUPER SHIFT, R, submap, resize
-
-    submap = resize
-      bind = , left,  resizeactive, -20 0
-      bind = , right, resizeactive, 20 0
-      bind = , up,    resizeactive, 0 -20
-      bind = , down,  resizeactive, 0 20
-      bind = , escape, submap, reset
-    submap = reset
-
-    #############################################
-    # AUTOSTART
-    #############################################
-    exec-once = hyprpaper
-    exec-once = nm-applet
-    exec-once = blueman-applet
-    exec-once = systemctl --user restart wireplumber
-
-    exec-once = hyprctl dispatch exec "[workspace 2 silent"] $terminal
-    exec-once = hyprctl dispatch exec "[workspace 1"] $browser
-  '';
-}
+      animation = windowsIn, 1, 6
 
