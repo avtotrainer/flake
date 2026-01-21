@@ -1,11 +1,20 @@
 #!/usr/bin/env sh
 
-STATE_FILE="/tmp/waybar-power-confirm"
+STATE="/tmp/waybar-power-confirm"
+TTL=2
 
-if [ -f "$STATE_FILE" ]; then
-  rm -f "$STATE_FILE"
-  systemctl poweroff
-else
-  touch "$STATE_FILE"
+if [ -f "$STATE" ]; then
+  NOW=$(date +%s)
+  CREATED=$(stat -c %Y "$STATE")
+
+  if [ $((NOW - CREATED)) -le $TTL ]; then
+    rm -f "$STATE"
+    systemctl poweroff
+    exit 0
+  else
+    rm -f "$STATE"
   fi
+fi
+
+touch "$STATE"
 

@@ -1,11 +1,19 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env sh
 
 STATE="/tmp/waybar-power-confirm"
+TTL=2   # წამებში
 
 if [ -f "$STATE" ]; then
-  echo '{ "text": "YES?", "tooltip": "Click again to shutdown", "class": "powermenu-confirm" }'
-else
-  echo '{ "text": "⏻", "tooltip": "Power", "class": "powermenu" }'
+  NOW=$(date +%s)
+  CREATED=$(stat -c %Y "$STATE")
+
+  if [ $((NOW - CREATED)) -le $TTL ]; then
+    echo '{ "text": "YES?", "tooltip": "Click again to shutdown", "class": "powermenu-confirm" }'
+    exit 0
+  else
+    rm -f "$STATE"
+  fi
 fi
 
-# echo '{ "text": "⏻", "tooltip": "Power Menu", "class": "powermenu" }'
+echo '{ "text": "⏻", "tooltip": "Power", "class": "powermenu" }'
+
