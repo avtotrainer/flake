@@ -1,4 +1,6 @@
-#!/run/current-system/sw/bin/bash
+#!/usr/bin/env bash
+
+
 
 chosen=$(nmcli -t -f IN-USE,SSID,SECURITY,SIGNAL dev wifi list | \
   sed 's/^*://' | \
