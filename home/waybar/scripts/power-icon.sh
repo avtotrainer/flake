@@ -8,7 +8,7 @@ if [ -f "$STATE" ]; then
   CREATED=$(stat -c %Y "$STATE")
 
   if [ $((NOW - CREATED)) -le $TTL ]; then
-    echo '{ "text": "YES?", "tooltip": "Click again to shutdown", "class": "powermenu-confirm" }'
+    echo '{ "text": "YES?", "tooltip": "Click again to shutdown or Right Click to reboot", "class": "powermenu-confirm" }'
     exit 0
   else
     rm -f "$STATE"
