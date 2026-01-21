@@ -109,12 +109,14 @@
           exec = "~/.config/waybar/scripts/power-icon.sh";
           interval = 1;
           return-type = "json";
- 
+          
           # მარცხენა კლიკი → გამორთვა
-          on-click = "systemctl poweroff";
+
+          on-click = "~/.config/waybar/scripts/confirm-shutdown.sh";
 
           # მარჯვენა კლიკი → გადატვირთვა
-          on-click-right = "systemctl reboot";
+
+          on-click-right = "~/.config/waybar/scripts/confirm-reboot.sh";
         };
 
         pulseaudio = {

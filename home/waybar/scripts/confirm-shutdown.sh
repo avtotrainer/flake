@@ -1,14 +1,14 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env sh
 
+STATE_FILE="/tmp/waybar-power-confirm"
 
-echo
-echo "Power off system?"
-echo "Press ENTER to confirm, any other key to cancel."
-echo
-
-read -r key
-
-# ENTER = ცარიელი სტრიქონი
-if [[ -z "$key" ]]; then
+if [ -f "$STATE_FILE" ]; then
+  rm -f "$STATE_FILE"
   systemctl poweroff
+else
+  touch "$STATE_FILE"
+  echo '{ "text": "YES?", "tooltip": "Click again to shutdown", "class": "powermenu-confirm" }'
+  sleep 2
+  rm -f "$STATE_FILE"
 fi
+
