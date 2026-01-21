@@ -7,8 +7,5 @@ if [ -f "$STATE_FILE" ]; then
   systemctl reboot
 else
   touch "$STATE_FILE"
-  echo '{ "text": "REBOOT?", "tooltip": "Click again to reboot", "class": "powermenu-confirm" }'
-  sleep 2
-  rm -f "$STATE_FILE"
 fi
 
