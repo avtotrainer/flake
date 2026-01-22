@@ -13,24 +13,28 @@
 
   networking.hostName = "wsl";
 
-  # ----------------------------
-  # WSL SAFETY
-  # ----------------------------
+  # ----------------------------------------
+  # WSL CORE
+  # ----------------------------------------
 
-  # WSL-ში ქსელს მართავს Windows
+  # ⚠️ კრიტიკული: ვუთხრათ WSL-ს ვინ არის default user
+  wsl.enable = true;
+  wsl.defaultUser = "avto";
+
+  # ----------------------------------------
+  # WSL SAFETY
+  # ----------------------------------------
+
   networking.networkmanager.enable = lib.mkForce false;
   networking.useDHCP = lib.mkForce false;
 
-  # არ ვცდილობთ user session / autologin-ს
   services.getty.autologinUser = lib.mkForce null;
-
-  # დრო და power არ არის აქტუალური WSL-ში
   services.timesyncd.enable = false;
   services.upower.enable = false;
 
-  # ----------------------------
-  # Minimal CLI (WSL bootstrap)
-  # ----------------------------
+  # ----------------------------------------
+  # Minimal CLI
+  # ----------------------------------------
   environment.systemPackages = with pkgs; [
     git
     tmux
