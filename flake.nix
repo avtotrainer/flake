@@ -16,12 +16,8 @@
   in {
     nixosConfigurations = {
 
-      # ----------------------------
-      # Laptop host (reference)
-      # ----------------------------
       laptop = nixpkgs.lib.nixosSystem {
         inherit system;
-
         modules = [
           ./hosts/laptop/default.nix
 
@@ -38,12 +34,8 @@
         ];
       };
 
-      # ----------------------------
-      # WSL host
-      # ----------------------------
       wsl = nixpkgs.lib.nixosSystem {
         inherit system;
-
         modules = [
           ./hosts/wsl/default.nix
 

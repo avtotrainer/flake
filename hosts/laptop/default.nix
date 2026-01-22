@@ -20,27 +20,14 @@
     ../../profiles/nixos/dev.nix
 
     ../../users/users.nix
+    ../../users/avto.nix
   ];
 
   networking.hostName = "nixos";
 
-  # ─────────────────────────────────────────────
-  # Networking — LAPTOP RESPONSIBILITY
-  # ─────────────────────────────────────────────
-  networking.networkmanager.enable = true;
-
-  # როცა NetworkManager გვაქვს, dhcpcd არ გვინდა
-  networking.useDHCP = false;
-
-  # ─────────────────────────────────────────────
-  # Boot behaviour
-  # ─────────────────────────────────────────────
   boot.loader.systemd-boot.configurationLimit = lib.mkForce 20;
   boot.loader.timeout = lib.mkForce 3;
 
-  # ─────────────────────────────────────────────
-  # System packages
-  # ─────────────────────────────────────────────
   environment.systemPackages = with pkgs; [
     python312
     python314
