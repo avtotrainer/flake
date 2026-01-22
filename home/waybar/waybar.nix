@@ -104,7 +104,7 @@
           tooltip = "Click to switch language";
         };
 
-        custom.power = {
+        "custom/power" = {
 
           exec = "~/.config/waybar/scripts/power-icon.sh";
           interval = 1;
