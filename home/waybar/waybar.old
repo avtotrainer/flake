@@ -14,62 +14,28 @@
     executable = true;
   };
 
-  xdg.configFile."waybar/scripts/confirm-shutdown.sh" = {
+ xdg.configFile."waybar/scripts/confirm-shutdown.sh" = {
     source = ./scripts/confirm-shutdown.sh;
     executable = true;
   };
 
-  xdg.configFile."waybar/scripts/confirm-reboot.sh" = {
+ xdg.configFile."waybar/scripts/power-icon.sh" = {
+    source = ./scripts/power-icon.sh;
+    executable = true;
+  };
+  
+ xdg.configFile."waybar/scripts/confirm-reboot.sh" = {
     source = ./scripts/confirm-reboot.sh;
     executable = true;
   };
 
-  xdg.configFile."waybar/scripts/power-icon.sh" = {
-    source = ./scripts/power-icon.sh;
-    executable = true;
-  };
-
-  # ─────────────────────────────────────────────
-  # Waybar
-  # ─────────────────────────────────────────────
   programs.waybar = {
     enable = true;
 
+     # ⬅️ აქ არის მთავარი ფიქსი
     style = ./style.css;
 
     settings = {
-
-      # ─────────────────────────────────────────
-      # Custom modules (B style — HM abstraction)
-      # ─────────────────────────────────────────
-      custom.separator = {
-        format = "|";
-        tooltip = false;
-      };
-
-      custom.kbd = {
-        exec = "~/.config/waybar/scripts/kbdc.sh";
-        interval = 1;
-        return-type = "json";
-        on-click = "~/.config/waybar/scripts/kbd-toggle.sh";
-        tooltip = "Click to switch language";
-      };
-
-      custom.power = {
-        exec = "~/.config/waybar/scripts/power-icon.sh";
-        interval = 1;
-        return-type = "json";
-
-        # მარცხენა კლიკი → გამორთვა
-        on-click = "~/.config/waybar/scripts/confirm-shutdown.sh";
-
-        # მარჯვენა კლიკი → გადატვირთვა
-        on-click-right = "~/.config/waybar/scripts/confirm-reboot.sh";
-      };
-
-      # ─────────────────────────────────────────
-      # Main bar
-      # ─────────────────────────────────────────
       mainBar = {
         layer = "top";
         position = "top";
@@ -123,6 +89,34 @@
           tooltip-format-ethernet = "IP: {ipaddr}";
 
           on-click = "~/.config/waybar/scripts/wifi-menu.sh";
+        };
+
+        "custom/separator" = {
+          format = "|";
+          tooltip = false;
+        };
+
+        "custom/kbd" = {
+          exec = "~/.config/waybar/scripts/kbdc.sh";
+          interval = 1;
+          return-type = "json";
+          on-click = "~/.config/waybar/scripts/kbd-togle.sh";
+          tooltip = "Click to switch language";
+        };
+
+        custom.power = {
+
+          exec = "~/.config/waybar/scripts/power-icon.sh";
+          interval = 1;
+          return-type = "json";
+          
+          # მარცხენა კლიკი → გამორთვა
+
+          on-click = "~/.config/waybar/scripts/confirm-shutdown.sh";
+
+          # მარჯვენა კლიკი → გადატვირთვა
+
+          on-click-right = "~/.config/waybar/scripts/confirm-reboot.sh";
         };
 
         pulseaudio = {
