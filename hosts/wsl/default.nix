@@ -13,13 +13,29 @@
 
   networking.hostName = "wsl";
 
-  networking.networkmanager.enable = lib.mkForce false;
-  services.upower.enable = lib.mkForce false;
-  services.getty.autologinUser = lib.mkForce null;
+  # ----------------------------
+  # WSL SAFETY
+  # ----------------------------
 
+  # WSL თავად მართავს ქსელს
+  networking.networkmanager.enable = lib.mkForce false;
+  services.dhcpcd.enable = lib.mkForce false;
+
+  # systemd user/session არ უნდა რესტარტდეს
+  services.getty.autologinUser = lib.mkForce null;
+  systemd.services."user@".enable = false;
+
+  # power / time irrelevant WSL-ში
+  services.timesyncd.enable = false;
+  services.upower.enable = false;
+
+  # ----------------------------
+  # Minimal CLI (WSL bootstrap)
+  # ----------------------------
   environment.systemPackages = with pkgs; [
-    tmux
-    neovim
+    git        # აუცილებელი: repo clone / update
+    tmux       # სესიის კონტროლი
+    neovim     # მინიმალური რედაქტორი
   ];
 
   system.stateVersion = "25.11";

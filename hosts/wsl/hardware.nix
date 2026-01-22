@@ -1,6 +1,9 @@
-{ ... }:
+{ config, lib, pkgs, ... }:
+
 {
   boot.isContainer = true;
-  networking.hostName = "wsl";
+
+  # systemd შეზღუდულ რეჟიმში
+  systemd.enableUnifiedCgroupHierarchy = false;
 }
 
