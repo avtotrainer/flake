@@ -17,15 +17,14 @@
   # WSL SAFETY
   # ----------------------------
 
-  # WSL თავად მართავს ქსელს
+  # WSL-ში ქსელს მართავს Windows
   networking.networkmanager.enable = lib.mkForce false;
-  services.dhcpcd.enable = lib.mkForce false;
+  networking.useDHCP = lib.mkForce false;
 
-  # systemd user/session არ უნდა რესტარტდეს
+  # არ ვცდილობთ user session / autologin-ს
   services.getty.autologinUser = lib.mkForce null;
-  systemd.services."user@".enable = false;
 
-  # power / time irrelevant WSL-ში
+  # დრო და power არ არის აქტუალური WSL-ში
   services.timesyncd.enable = false;
   services.upower.enable = false;
 
@@ -33,9 +32,9 @@
   # Minimal CLI (WSL bootstrap)
   # ----------------------------
   environment.systemPackages = with pkgs; [
-    git        # აუცილებელი: repo clone / update
-    tmux       # სესიის კონტროლი
-    neovim     # მინიმალური რედაქტორი
+    git
+    tmux
+    neovim
   ];
 
   system.stateVersion = "25.11";
