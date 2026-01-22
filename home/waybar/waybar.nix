@@ -100,7 +100,7 @@
           exec = "~/.config/waybar/scripts/kbdc.sh";
           interval = 1;
           return-type = "json";
-          on-click = "~/.config/waybar/scripts/kbd-togle.sh";
+          on-click = "~/.config/waybar/scripts/kbd-toggle.sh";
           tooltip = "Click to switch language";
         };
 
