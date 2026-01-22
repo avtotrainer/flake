@@ -4,16 +4,11 @@
   users.users.avto = {
     isNormalUser = true;
 
-    # ── კრიტიკული WSL-ისთვის ─────────────────────────
+    # კრიტიკული WSL-ისთვის (სტაბილური uid)
     uid = 1000;
-    initialPassword = "2";
-    # -------------------------------------------------
 
     shell = pkgs.zsh;
-    extraGroups = [
-      "wheel"
-      "networkmanager"
-    ];
+    extraGroups = [ "wheel" "networkmanager" ];
   };
 }
 

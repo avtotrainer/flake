@@ -16,24 +16,24 @@
   # ----------------------------------------
   # WSL CORE
   # ----------------------------------------
-
-  # ⚠️ კრიტიკული: ვუთხრათ WSL-ს ვინ არის default user
   wsl.enable = true;
   wsl.defaultUser = "avto";
 
   # ----------------------------------------
-  # WSL SAFETY
+  # Override laptop-only TTY autologin from base.nix
+  # (WSL-ში getty არ გვჭირდება)
   # ----------------------------------------
-
-  networking.networkmanager.enable = lib.mkForce false;
-  networking.useDHCP = lib.mkForce false;
-
   services.getty.autologinUser = lib.mkForce null;
-  services.timesyncd.enable = false;
-  services.upower.enable = false;
 
   # ----------------------------------------
-  # Minimal CLI
+  # Password: Repo-დან გადაწყდეს, WSL-ზე კი sudo იმუშაოს
+  # (დროებითი, სწრაფი გზა)
+  # ----------------------------------------
+  users.mutableUsers = true;
+  users.users.avto.initialPassword = "2";
+
+  # ----------------------------------------
+  # Minimal CLI (system-level)
   # ----------------------------------------
   environment.systemPackages = with pkgs; [
     git

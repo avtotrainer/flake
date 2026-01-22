@@ -1,30 +1,30 @@
 { pkgs, osConfig, lib, ... }:
 
 let
-  isWSL = (osConfig.networking.hostName or "") == "wsl";
+  isWSL = (osConfig ? wsl) && (osConfig.wsl.enable or false);
 in
 {
   home.username = "avto";
   home.homeDirectory = "/home/avto";
-  home.stateVersion = "25.11";
 
   home.sessionVariables = {
     HOSTNAME_FROM_FLAKE = osConfig.networking.hostName;
+
     EDITOR = "nvim";
     VISUAL = "nvim";
     NVIM_APPNAME = "nvim";
-  } // lib.optionalAttrs (!isWSL) {
+
     XCURSOR_THEME = "Bibata-Modern-Ice";
-    XCURSOR_SIZE  = "24";
+    XCURSOR_SIZE = "24";
   };
 
   imports =
     [
       ./zsh/zsh.nix
       ./direnv/direnv.nix
-      ./config/config.nix
     ]
     ++ lib.optionals (!isWSL) [
+      ./config/config.nix
       ./alacritty/alacritty.nix
       ./waybar/waybar.nix
     ];
@@ -40,12 +40,7 @@ in
 
   programs.git.enable = true;
 
-  programs.tmux = {
-    enable = true;
-    terminal = "screen-256color";
-    clock24 = true;
-  };
-
+  # WSL-ზე გამორთულია, ლეპტოპზე ჩართული
   programs.waybar.enable = lib.mkIf (!isWSL) true;
 
   gtk = lib.mkIf (!isWSL) {
@@ -57,6 +52,6 @@ in
     };
   };
 
-  dconf.enable = lib.mkIf (!isWSL) true;
+  home.stateVersion = "25.11";
 }
 

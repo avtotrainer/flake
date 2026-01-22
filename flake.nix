@@ -8,9 +8,14 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }:
+  outputs = { self, nixpkgs, home-manager, nixos-wsl, ... }:
   let
     system = "x86_64-linux";
   in {
@@ -37,6 +42,8 @@
       wsl = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
+          nixos-wsl.nixosModules.default
+
           ./hosts/wsl/default.nix
 
           home-manager.nixosModules.home-manager
