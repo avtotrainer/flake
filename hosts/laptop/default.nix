@@ -25,9 +25,20 @@
 
   networking.hostName = "nixos";
 
+  # ----------------------------
+  # Networking (Laptop-specific)
+  # ----------------------------
+  networking.networkmanager.enable = true;
+
+  # ----------------------------
+  # Bootloader behavior
+  # ----------------------------
   boot.loader.systemd-boot.configurationLimit = lib.mkForce 20;
   boot.loader.timeout = lib.mkForce 3;
 
+  # ----------------------------
+  # System packages (Laptop)
+  # ----------------------------
   environment.systemPackages = with pkgs; [
     python312
     python314
