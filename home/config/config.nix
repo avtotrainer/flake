@@ -6,9 +6,8 @@
   xdg.configFile."lsd".source        = ./lsd;
   xdg.configFile."vifm".source       = ./vifm;
 
-  # NvChad config (pinned, reproducible)
-  xdg.configFile."nvim".source = pkgs.fetchgit {
-    url  = "https://github.com/avtotrainer/nvchad-2.5-config.git";
-    hash = "sha256-pzSd77BSsJxvPQmgF9BPNg6bjostdUNozJl7t07oz+c=";
-  };
+  # NOTE:
+  # nvim/NvChad კონფიგი აქედან ამოღებულია.
+  # nvim-ზე ზემოქმედება ხდება მხოლოდ home/nvim/nvim.nix-იდან.
 }
+
