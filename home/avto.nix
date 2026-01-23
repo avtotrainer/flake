@@ -20,6 +20,7 @@ in
 
   imports =
     [
+      ./nvim/nvim.nix
       ./zsh/zsh.nix
       ./direnv/direnv.nix
     ]
