@@ -32,7 +32,6 @@ in
 
   home.packages = with pkgs; [
     git
-    neovim
     jq
     tree
     ripgrep
@@ -41,7 +40,7 @@ in
 
   programs.git.enable = true;
 
-  # WSL-ზე გამორთულია, ლეპტოპზე ჩართული
+  # ლეპტოპზე ჩართული
   programs.waybar.enable = lib.mkIf (!isWSL) true;
 
   gtk = lib.mkIf (!isWSL) {
@@ -55,4 +54,3 @@ in
 
   home.stateVersion = "25.11";
 }
-
