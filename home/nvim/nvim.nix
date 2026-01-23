@@ -25,8 +25,9 @@
   xdg.configFile."nvim" = {
     source = pkgs.fetchgit {
       url = "https://github.com/avtotrainer/nvchad-2.5-config.git";
-      rev = "fa097d8ebac674d76f30802c30563df24b2ede16";
-      hash = "sha256-LHGivBAdotXD6Ls7uNit0zNyc84SWWnKCB6KI9Kj6nQ=";
+      rev = "5cab1149242dbf9b0f9e43545e3329f80252fe9c";
+
+      hash = "sha256-QwV9SMx3KcLdesEYCiP9tNPXnE+E1GlEfuLztpo01LY=";
     };
 
     # თუ ~/.config/nvim ადრე დირექტორია/ფაილი იყო, ამას დეკლარატიულად გადააწერს symlink-ით
