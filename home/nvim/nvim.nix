@@ -8,25 +8,88 @@
     vimAlias = true;
     defaultEditor = true;
 
-    # Plugins only — no config here
-    plugins = with pkgs.vimPlugins; [
-      vim-nix
-      plenary-nvim
-      telescope-nvim
-      nvim-treesitter.withAllGrammars
-      lualine-nvim
-    ];
+    # Providers — რომ “:checkhealth” არ გიღრიალებდეს
+    withNodeJs = true;
+    withPython3 = true;
+    withRuby = true;
+
+    # python provider (pynvim) — დეკლარატიულად
+    extraPython3Packages = ps: [ ps.pynvim ];
+
+    # IMPORTANT:
+    # NvChad მართავს ~/.config/nvim-ს, ამიტომ აქ არ ვწერთ init.lua-ს
+    # და არ ვაყენებთ plugins-ს programs.neovim.plugins-ით (კოლიზია იქნება).
   };
 
-  # Your actual Neovim config (Lua)
-  xdg.configFile."nvim/init.lua".text = ''
-    vim.o.number = true
-    vim.o.relativenumber = true
-    vim.o.expandtab = true
-    vim.o.shiftwidth = 2
-    vim.o.tabstop = 2
-    vim.o.clipboard = "unnamedplus"
+  # NvChad config (pinned, reproducible) — ~/.config/nvim-ის ერთადერთი owner
+  xdg.configFile."nvim".source = pkgs.fetchgit {
+    url  = "https://github.com/avtotrainer/nvchad-2.5-config.git";
+    hash = "sha256-pzSd77BSsJxvPQmgF9BPNg6bjostdUNozJl7t07oz+c=";
+  };
 
-    require("lualine").setup()
-  '';
+  # შენი “აქტიური პლაგინების” პრაქტიკული სრული კომპლექტი:
+  # - Telescope/grep/fuzzy
+  # - Treesitter/native builds
+  # - LSP/formatters/linters (მეტად სრული, რომ არაფერი დაგაკლდეს)
+  # - Git integration
+  home.packages = with pkgs; [
+    # Core tooling
+    git
+    curl
+    unzip
+    gzip
+    gnutar
+
+    # Search / fuzzy
+    ripgrep
+    fd
+    fzf
+
+    # Native build tools (treesitter / telescope-fzf-native / etc.)
+    gcc
+    gnumake
+    cmake
+    pkg-config
+
+    # Clipboard helpers (ხშირად საჭიროა)
+    xclip
+    wl-clipboard
+
+    # Nix / Lua / Markdown tooling (ხშირად NvChad გარემოში)
+    nil
+    lua-language-server
+    stylua
+    marksman
+
+    # Shell tooling
+    shellcheck
+    shfmt
+    bash-language-server
+
+    # Python tooling
+    python312
+    ruff
+    black
+    pyright
+
+    # Web tooling (TS/JS/HTML/CSS/JSON)
+    nodejs_22
+    nodePackages.typescript-language-server
+    nodePackages.vscode-langservers-extracted
+    nodePackages.prettier
+    nodePackages.prettierd
+    yaml-language-server
+    taplo
+
+    # Go / Rust (თუ გაქვს შესაბამისი პლაგინები/LSP)
+    go
+    gopls
+    rustc
+    cargo
+    rust-analyzer
+
+    # მომავალში Codeium/Windsurf-ისთვის (NixOS-ზე wrapper ხშირად გჭირდება)
+    steam-run
+  ];
 }
+
