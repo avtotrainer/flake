@@ -33,12 +33,27 @@
   users.users.avto.initialPassword = "2";
 
   # ----------------------------------------
-  # Minimal CLI (system-level)
+  # direnv + nix-direnv (system-level)
+  # ----------------------------------------
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
+
+  # ----------------------------------------
+  # Minimal CLI + Neovim deps (system-level)
   # ----------------------------------------
   environment.systemPackages = with pkgs; [
     git
     tmux
     neovim
+
+    # NvChad practical deps
+    ripgrep
+    fd
+    gcc
+    gnumake
+    unzip
+    nodejs
+    python3
   ];
 
   system.stateVersion = "25.11";
