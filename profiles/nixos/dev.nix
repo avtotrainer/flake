@@ -1,13 +1,16 @@
 { pkgs, lib, config, ... }:
 
+let
+  isWSL = (config ? wsl) && (config.wsl.enable or false);
+in
 {
   environment.systemPackages =
     with pkgs;
     [
-      # CLI — სისტემაშიც შეიძლება
+      # CLI
       gh
     ]
-    ++ lib.optionals (!config.wsl.enable) [
+    ++ lib.optionals (!isWSL) [
       # GUI — ლეპტოპზე დარჩეს System Layer-ში
       vscode
       google-chrome
