@@ -8,7 +8,7 @@
     vimAlias = true;
     defaultEditor = true;
 
-    # Providers — რომ “:checkhealth” არ გიღრიალებდეს
+    # Providers — რომ :checkhealth არ გიღრიალებდეს
     withNodeJs = true;
     withPython3 = true;
     withRuby = true;
@@ -24,8 +24,9 @@
   # NvChad config (pinned, reproducible) — ~/.config/nvim-ის ერთადერთი owner
   xdg.configFile."nvim" = {
     source = pkgs.fetchgit {
-      url  = "https://github.com/avtotrainer/nvchad-2.5-config.git";
-      hash = "sha256-pzSd77BSsJxvPQmgF9BPNg6bjostdUNozJl7t07oz+c=";
+      url = "https://github.com/avtotrainer/nvchad-2.5-config.git";
+      rev = "fa097d8ebac674d76f30802c30563df24b2ede16";
+      hash = "sha256-LHGivBAdotXD6Ls7uNit0zNyc84SWWnKCB6KI9Kj6nQ=";
     };
 
     # თუ ~/.config/nvim ადრე დირექტორია/ფაილი იყო, ამას დეკლარატიულად გადააწერს symlink-ით
@@ -88,7 +89,8 @@
     cargo
     rust-analyzer
 
-    # Codeium/Windsurf-ისთვის
+    # Codeium/Windsurf-ისთვის (wrapper ხშირად გჭირდება)
     steam-run
   ];
 }
+
