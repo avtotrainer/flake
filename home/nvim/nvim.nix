@@ -1,36 +1,6 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
-let
-  # ─────────────────────────────────────────────
-  # NvChad source selector
-  #
-  # true  → local NvChad snapshot via builtins.path (PURE, rebuild required)
-  # false → pinned Git repo (PURE, reproducible)
-  #
-  # ⚠️ NOTE:
-  # This is NOT live-edit mode.
-  # Any change in the local directory requires nixos-rebuild.
-  # ─────────────────────────────────────────────
-  useLocalNvChad = true;
-
-  # Local NvChad directory (declared as Nix input)
-  localNvChadPath = builtins.path {
-    path = /home/avto/nvchad-2.5-config;
-    name = "nvchad-2.5-config";
-  };
-
-  # Pinned, reproducible NvChad config
-  pinnedNvChad = pkgs.fetchgit {
-    url = "https://github.com/avtotrainer/nvchad-2.5-config.git";
-    rev = "5cab1149242dbf9b0f9e43545e3329f80252fe9c";
-    hash = "sha256-QwV9SMx3KcLdesEYCiP9tNPXnE+E1GlEfuLztpo01LY=";
-  };
-in
 {
-  # ─────────────────────────────────────────────
-  # Neovim (system integration only)
-  # NvChad is the sole owner of ~/.config/nvim
-  # ─────────────────────────────────────────────
   programs.neovim = {
     enable = true;
 
@@ -38,37 +8,35 @@ in
     vimAlias = true;
     defaultEditor = true;
 
-    # Providers (silence :checkhealth)
+    # Providers — რომ :checkhealth არ გიღრიალებდეს
     withNodeJs = true;
     withPython3 = true;
     withRuby = true;
 
-    # Python provider
+    # python provider (pynvim) — დეკლარატიულად
     extraPython3Packages = ps: [ ps.pynvim ];
 
     # IMPORTANT:
-    # - no init.lua here
-    # - no plugins here
+    # NvChad მართავს ~/.config/nvim-ს, ამიტომ აქ არ ვწერთ init.lua-ს
+    # და არ ვაყენებთ plugins-ს programs.neovim.plugins-ით (კოლიზია იქნება).
   };
 
-  # ─────────────────────────────────────────────
-  # NvChad configuration source
-  # ─────────────────────────────────────────────
+  # NvChad config (pinned, reproducible) — ~/.config/nvim-ის ერთადერთი owner
   xdg.configFile."nvim" = {
-    source =
-      if useLocalNvChad
-      then localNvChadPath
-      else pinnedNvChad;
+    source = pkgs.fetchgit {
+      url = "https://github.com/avtotrainer/nvchad-2.5-config.git";
+      rev = "5cab1149242dbf9b0f9e43545e3329f80252fe9c";
+      hash = "sha256-QwV9SMx3KcLdesEYCiP9tNPXnE+E1GlEfuLztpo01LY=";
+    };
 
     recursive = true;
+
+    # თუ ~/.config/nvim ადრე დირექტორია/ფაილი იყო, ამას დეკლარატიულად გადააწერს symlink-ით
     force = true;
   };
 
-  # ─────────────────────────────────────────────
-  # User tooling required by NvChad / LSP / Codeium
-  # ─────────────────────────────────────────────
   home.packages = with pkgs; [
-    # Core
+    # Core tooling
     git
     curl
     unzip
@@ -80,7 +48,7 @@ in
     fd
     fzf
 
-    # Native build tools
+    # Native build tools (treesitter / telescope-fzf-native / etc.)
     gcc
     gnumake
     cmake
@@ -90,7 +58,7 @@ in
     xclip
     wl-clipboard
 
-    # Nix / Lua / Markdown
+    # Nix / Lua / Markdown tooling
     nil
     lua-language-server
     stylua
@@ -107,7 +75,7 @@ in
     black
     pyright
 
-    # Web tooling
+    # Web tooling (TS/JS/HTML/CSS/JSON)
     nodejs_22
     nodePackages.typescript-language-server
     nodePackages.vscode-langservers-extracted
@@ -123,7 +91,7 @@ in
     cargo
     rust-analyzer
 
-    # Codeium / Windsurf FHS wrapper
+    # Codeium/Windsurf-ისთვის (wrapper ხშირად გჭირდება)
     steam-run
   ];
 }
