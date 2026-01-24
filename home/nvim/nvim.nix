@@ -2,15 +2,22 @@
 
 let
   # ─────────────────────────────────────────────
-  # NvChad development switch
+  # NvChad source selector
   #
-  # true  → გამოიყენება ლოკალური nvchad-2.5-config (LIVE)
-  # false → გამოიყენება pinned Git repo (REPRODUCIBLE)
+  # true  → local NvChad snapshot via builtins.path (PURE, rebuild required)
+  # false → pinned Git repo (PURE, reproducible)
+  #
+  # ⚠️ NOTE:
+  # This is NOT live-edit mode.
+  # Any change in the local directory requires nixos-rebuild.
   # ─────────────────────────────────────────────
   useLocalNvChad = true;
 
-  # ⚠️ ზუსტად არსებული დირექტორია
-  localNvChadPath = "/home/avto/nvchad-2.5-config";
+  # Local NvChad directory (declared as Nix input)
+  localNvChadPath = builtins.path {
+    path = /home/avto/nvchad-2.5-config;
+    name = "nvchad-2.5-config";
+  };
 
   # Pinned, reproducible NvChad config
   pinnedNvChad = pkgs.fetchgit {
@@ -21,8 +28,8 @@ let
 in
 {
   # ─────────────────────────────────────────────
-  # Neovim (system/user integration only)
-  # NvChad fully owns ~/.config/nvim
+  # Neovim (system integration only)
+  # NvChad is the sole owner of ~/.config/nvim
   # ─────────────────────────────────────────────
   programs.neovim = {
     enable = true;
@@ -31,18 +38,17 @@ in
     vimAlias = true;
     defaultEditor = true;
 
-    # Providers (silence :checkhealth warnings)
+    # Providers (silence :checkhealth)
     withNodeJs = true;
     withPython3 = true;
     withRuby = true;
 
-    # Python provider (pynvim)
+    # Python provider
     extraPython3Packages = ps: [ ps.pynvim ];
 
     # IMPORTANT:
     # - no init.lua here
     # - no plugins here
-    # NvChad is the only owner of ~/.config/nvim
   };
 
   # ─────────────────────────────────────────────
@@ -59,7 +65,7 @@ in
   };
 
   # ─────────────────────────────────────────────
-  # User tooling required by NvChad + LSP + Codeium
+  # User tooling required by NvChad / LSP / Codeium
   # ─────────────────────────────────────────────
   home.packages = with pkgs; [
     # Core
@@ -74,7 +80,7 @@ in
     fd
     fzf
 
-    # Native build tools (treesitter, native extensions)
+    # Native build tools
     gcc
     gnumake
     cmake
@@ -101,7 +107,7 @@ in
     black
     pyright
 
-    # Web (JS / TS / HTML / CSS / JSON / YAML)
+    # Web tooling
     nodejs_22
     nodePackages.typescript-language-server
     nodePackages.vscode-langservers-extracted
@@ -117,7 +123,7 @@ in
     cargo
     rust-analyzer
 
-    # Codeium / Windsurf helper (FHS wrapper)
+    # Codeium / Windsurf FHS wrapper
     steam-run
   ];
 }
