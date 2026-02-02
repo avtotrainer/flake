@@ -4,6 +4,7 @@
   imports = [
     ./hardware.nix
     ./wallpaper.nix
+    ./wifi/mes.nix
 
     ../../modules/nixos/base.nix
     ../../modules/nixos/boot-silent.nix
