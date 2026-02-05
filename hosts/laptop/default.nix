@@ -16,6 +16,8 @@
     ../../modules/nixos/hyprland.nix
     ../../modules/nixos/ssh.nix
     ../../modules/nixos/locale.nix
+    ../../modules/nixos/printing.nix
+
 
     ../../profiles/nixos/laptop.nix
     ../../profiles/nixos/dev.nix
