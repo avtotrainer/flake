@@ -89,6 +89,7 @@ in
     ruff
     black
     pyright
+    ruff-lsp
 
     # Web tooling (TS/JS/HTML/CSS/JSON)
     nodejs_22
