@@ -36,6 +36,7 @@ in
     tree
     ripgrep
     tmux
+    vifm
   ];
 
   programs.git.enable = true;
