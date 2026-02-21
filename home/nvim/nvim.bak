@@ -1,21 +1,5 @@
-{ pkgs, config, ... }:
+{ pkgs, ... }:
 
-let
-  # DEV toggle:
-  # true  -> ~/.config/nvim იქნება out-of-store symlink (რედაქტირებადი repo)
-  # false -> ~/.config/nvim იქნება pinned fetchgit (რეპროდუცირებადი)
-  devMode = true;
-
-  # აქ იგულისხმება, რომ NvChad config repo ლოკალურად გექნება ამ მისამართზე
-  # (შეგიძლია სხვა path-იც ჩასვა)
-  nvchadDevPath = "${config.home.homeDirectory}/Projects/nvchad-2.5-config";
-
-  nvchadPinned = pkgs.fetchgit {
-    url = "https://github.com/avtotrainer/nvchad-2.5-config.git";
-    rev = "5cab1149242dbf9b0f9e43545e3329f80252fe9c";
-    hash = "sha256-QwV9SMx3KcLdesEYCiP9tNPXnE+E1GlEfuLztpo01LY=";
-  };
-in
 {
   programs.neovim = {
     enable = true;
@@ -37,12 +21,13 @@ in
     # და არ ვაყენებთ plugins-ს programs.neovim.plugins-ით (კოლიზია იქნება).
   };
 
-  # NvChad config — DEV ან PINNED
+  # NvChad config (pinned, reproducible) — ~/.config/nvim-ის ერთადერთი owner
   xdg.configFile."nvim" = {
-    source =
-      if devMode
-      then config.lib.file.mkOutOfStoreSymlink nvchadDevPath
-      else nvchadPinned;
+    source = pkgs.fetchgit {
+      url = "https://github.com/avtotrainer/nvchad-2.5-config.git";
+      rev = "5cab1149242dbf9b0f9e43545e3329f80252fe9c";
+      hash = "sha256-QwV9SMx3KcLdesEYCiP9tNPXnE+E1GlEfuLztpo01LY=";
+    };
 
     recursive = true;
 
@@ -110,3 +95,4 @@ in
     steam-run
   ];
 }
+
