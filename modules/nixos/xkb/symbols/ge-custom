@@ -10,9 +10,20 @@ xkb_symbols "ge-custom" {
     // 3 = AltGr
     // 4 = Shift+AltGr
     //
-    // შენიშვნა:
-    // ზედა რიცხვების რიგი (`~123...-=) საერთოდ არ არის override-ით აღწერილი,
-    // ამიტომ მისი 1/2 დონე ზუსტად ისეთი რჩება, როგორიც ge(ergonomic)-შია.
+    // ზედა რიგი ძირითადად ge(ergonomic)-იდან რჩება უცვლელი.
+    // ცალკე ვასწორებთ მხოლოდ:
+    //   TLDE  -> AltGr = ~,   Shift+AltGr = `
+    //   AE11  -> AltGr = _,   Shift+AltGr = -
+    //   AE12  -> AltGr = +,   Shift+AltGr = =
+
+    key <TLDE> { type[Group1] = "FOUR_LEVEL",
+        [ 0x0100201e, 0x0100201c, asciitilde, grave ] };
+
+    key <AE11> { type[Group1] = "FOUR_LEVEL",
+        [ minus, underscore, underscore, minus ] };
+
+    key <AE12> { type[Group1] = "FOUR_LEVEL",
+        [ equal, plus, plus, equal ] };
 
     // qwertyuiop
     key <AD01> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
@@ -36,7 +47,7 @@ xkb_symbols "ge-custom" {
     key <AD10> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
         [ Georgian_shin, 0x01001ca8, P, paragraph ] };
 
-    // base ქართული უნდა დარჩეს: კ ქ
+    // აქ base ქართული უნდა დარჩეს: კ ქ
     key <AD11> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
         [ Georgian_kan,  0x01001c99, braceleft, bracketleft ] };
     key <AD12> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
@@ -65,7 +76,7 @@ xkb_symbols "ge-custom" {
     key <AC09> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
         [ Georgian_rae,  0x01001ca0, L, 0x01002113 ] };   // ℓ
 
-    // base ქართული უნდა დარჩეს: ბ გ
+    // აქ base ქართული უნდა დარჩეს: ბ გ
     key <AC10> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
         [ Georgian_ban,  0x01001c91, colon, semicolon ] };
     key <AC11> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
@@ -87,7 +98,7 @@ xkb_symbols "ge-custom" {
     key <AB07> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
         [ Georgian_can,  0x01001caa, M, mu ] };
 
-    // base ქართული უნდა დარჩეს: ლ ფ წ
+    // აქ base ქართული უნდა დარჩეს: ლ ფ წ
     key <AB08> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
         [ Georgian_las,  0x01001c9a, less, comma ] };
     key <AB09> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
