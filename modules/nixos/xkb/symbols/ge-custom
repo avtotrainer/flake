@@ -4,13 +4,11 @@ xkb_symbols "ge-custom" {
     include "ge(ergonomic)"
     name[Group1]= "Georgian (ergonomic, Mtavruli + US AltGr + extra symbols)";
 
-    // level 1 = base
-    // level 2 = Shift
-    // level 3 = AltGr  (US Shift)
-    // level 4 = Shift+AltGr
-    //
-    // letters: extra symbols on level 4
-    // symbol keys: US base on level 4
+    // დონეები:
+    // 1 = ქართული პატარა
+    // 2 = ქართული მთავრული
+    // 3 = AltGr  -> US Shift
+    // 4 = Shift+AltGr -> US base ან დამატებითი ნიშანი
 
     key <TLDE> { type[Group1] = "FOUR_LEVEL",
         [ grave, asciitilde, asciitilde, grave ] };
@@ -62,10 +60,13 @@ xkb_symbols "ge-custom" {
     key <AD10> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
         [ Georgian_shin, 0x01001ca8, P, paragraph ] };
 
-    key <AD11> { type[Group1] = "FOUR_LEVEL",
-        [ bracketleft, braceleft, braceleft, bracketleft ] };
-    key <AD12> { type[Group1] = "FOUR_LEVEL",
-        [ bracketright, braceright, braceright, bracketright ] };
+    // აქ base ქართული უნდა დარჩეს: კ ქ
+    key <AD11> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_kan,  0x01001c99, braceleft, bracketleft ] };
+    key <AD12> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_khar, 0x01001ca5, braceright, bracketright ] };
+
+    // \ კლავიშს ქართული ასო არ ეკავა, ამიტომ აქ US ლოგიკა დარჩება
     key <BKSL> { type[Group1] = "FOUR_LEVEL",
         [ backslash, bar, bar, backslash ] };
 
@@ -89,10 +90,11 @@ xkb_symbols "ge-custom" {
     key <AC09> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
         [ Georgian_rae,  0x01001ca0, L, 0x01002113 ] };   // ℓ
 
-    key <AC10> { type[Group1] = "FOUR_LEVEL",
-        [ semicolon, colon, colon, semicolon ] };
-    key <AC11> { type[Group1] = "FOUR_LEVEL",
-        [ apostrophe, quotedbl, quotedbl, apostrophe ] };
+    // აქ base ქართული უნდა დარჩეს: ბ გ
+    key <AC10> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_ban,  0x01001c91, colon, semicolon ] };
+    key <AC11> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_gan,  0x01001c92, quotedbl, apostrophe ] };
 
     // zxcvbnm
     key <AB01> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
@@ -110,10 +112,11 @@ xkb_symbols "ge-custom" {
     key <AB07> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
         [ Georgian_can,  0x01001caa, M, mu ] };
 
-    key <AB08> { type[Group1] = "FOUR_LEVEL",
-        [ comma, less, less, comma ] };
-    key <AB09> { type[Group1] = "FOUR_LEVEL",
-        [ period, greater, greater, period ] };
-    key <AB10> { type[Group1] = "FOUR_LEVEL",
-        [ slash, question, question, slash ] };
+    // აქ base ქართული უნდა დარჩეს: ლ ფ წ
+    key <AB08> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_las,  0x01001c9a, less, comma ] };
+    key <AB09> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_phar, 0x01001ca4, greater, period ] };
+    key <AB10> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_cil,  0x01001cac, question, slash ] };
 };
