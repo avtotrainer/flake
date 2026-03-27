@@ -17,7 +17,8 @@
     ../../modules/nixos/ssh.nix
     ../../modules/nixos/locale.nix
     ../../modules/nixos/printing.nix
-
+    
+    ../../modules/nixos/keyboard-ge-mtavruli.nix
 
     ../../profiles/nixos/laptop.nix
     ../../profiles/nixos/dev.nix
