@@ -66,8 +66,8 @@ $menu = wofi --show drun
 # INPUT
 #############################################
 input {
-  kb_layout = us,ge
-  kb_variant = ,ergonomic
+  kb_layout = us,ge-custom
+  kb_variant = ,
   kb_options = grp:win_space_toggle
 
   follow_mouse = 1
