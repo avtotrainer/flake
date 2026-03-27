@@ -1,0 +1,40 @@
+partial alphanumeric_keys
+xkb_symbols "ergonomic" {
+
+    include "ge(ergonomic)"
+    name[Group1]= "Georgian (ergonomic, Mtavruli on Shift)";
+
+    key <AD01> { [ Georgian_chin, 0x01001ca9 ] };
+    key <AD02> { [ Georgian_par, 0x01001c9e ] };
+    key <AD03> { [ Georgian_un, 0x01001ca3 ] };
+    key <AD04> { [ Georgian_jil, 0x01001cab ] };
+    key <AD05> { [ Georgian_char, 0x01001cad ] };
+    key <AD06> { [ Georgian_tar, 0x01001ca2 ] };
+    key <AD07> { [ Georgian_tan, 0x01001c97 ] };
+    key <AD08> { [ Georgian_nar, 0x01001c9c ] };
+    key <AD09> { [ Georgian_vin, 0x01001c95 ] };
+    key <AD10> { [ Georgian_shin, 0x01001ca8 ] };
+
+    key <AC01> { [ Georgian_xan, 0x01001cae ] };
+    key <AC02> { [ Georgian_in, 0x01001c98 ] };
+    key <AC03> { [ Georgian_an, 0x01001c90 ] };
+    key <AC04> { [ Georgian_en, 0x01001c94 ] };
+    key <AC05> { [ Georgian_on, 0x01001c9d ] };
+    key <AC06> { [ Georgian_don, 0x01001c93 ] };
+    key <AC07> { [ Georgian_man, 0x01001c9b ] };
+    key <AC08> { [ Georgian_san, 0x01001ca1 ] };
+    key <AC09> { [ Georgian_rae, 0x01001ca0 ] };
+    key <AC10> { [ Georgian_ban, 0x01001c91 ] };
+    key <AC11> { [ Georgian_gan, 0x01001c92 ] };
+
+    key <AB01> { [ Georgian_jhan, 0x01001caf ] };
+    key <AB02> { [ Georgian_hae, 0x01001cb0 ] };
+    key <AB03> { [ Georgian_qar, 0x01001ca7 ] };
+    key <AB04> { [ Georgian_ghan, 0x01001ca6 ] };
+    key <AB05> { [ Georgian_zhar, 0x01001c9f ] };
+    key <AB06> { [ Georgian_zen, 0x01001c96 ] };
+    key <AB07> { [ Georgian_can, 0x01001caa ] };
+    key <AB08> { [ Georgian_las, 0x01001c9a ] };
+    key <AB09> { [ Georgian_phar, 0x01001ca4 ] };
+    key <AB10> { [ Georgian_cil, 0x01001cac ] };
+};

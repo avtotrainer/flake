@@ -18,7 +18,7 @@
     ../../modules/nixos/locale.nix
     ../../modules/nixos/printing.nix
     
-    ../../modules/nixos/keyboard-ge-mtavruli.nix
+    ../../modules/nixos/keyboard-georgian.nix
 
     ../../profiles/nixos/laptop.nix
     ../../profiles/nixos/dev.nix
