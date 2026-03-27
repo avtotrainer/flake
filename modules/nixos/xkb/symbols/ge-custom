@@ -7,36 +7,12 @@ xkb_symbols "ge-custom" {
     // დონეები:
     // 1 = ქართული პატარა
     // 2 = ქართული მთავრული
-    // 3 = AltGr  -> US Shift
-    // 4 = Shift+AltGr -> US base ან დამატებითი ნიშანი
-
-    key <TLDE> { type[Group1] = "FOUR_LEVEL",
-        [ grave, asciitilde, asciitilde, grave ] };
-
-    key <AE01> { type[Group1] = "FOUR_LEVEL",
-        [ 1, exclam, exclam, 1 ] };
-    key <AE02> { type[Group1] = "FOUR_LEVEL",
-        [ 2, at, at, 2 ] };
-    key <AE03> { type[Group1] = "FOUR_LEVEL",
-        [ 3, numbersign, numbersign, 3 ] };
-    key <AE04> { type[Group1] = "FOUR_LEVEL",
-        [ 4, dollar, dollar, 4 ] };
-    key <AE05> { type[Group1] = "FOUR_LEVEL",
-        [ 5, percent, percent, 5 ] };
-    key <AE06> { type[Group1] = "FOUR_LEVEL",
-        [ 6, asciicircum, asciicircum, 6 ] };
-    key <AE07> { type[Group1] = "FOUR_LEVEL",
-        [ 7, ampersand, ampersand, 7 ] };
-    key <AE08> { type[Group1] = "FOUR_LEVEL",
-        [ 8, asterisk, asterisk, 8 ] };
-    key <AE09> { type[Group1] = "FOUR_LEVEL",
-        [ 9, parenleft, parenleft, 9 ] };
-    key <AE10> { type[Group1] = "FOUR_LEVEL",
-        [ 0, parenright, parenright, 0 ] };
-    key <AE11> { type[Group1] = "FOUR_LEVEL",
-        [ minus, underscore, underscore, minus ] };
-    key <AE12> { type[Group1] = "FOUR_LEVEL",
-        [ equal, plus, plus, equal ] };
+    // 3 = AltGr
+    // 4 = Shift+AltGr
+    //
+    // შენიშვნა:
+    // ზედა რიცხვების რიგი (`~123...-=) საერთოდ არ არის override-ით აღწერილი,
+    // ამიტომ მისი 1/2 დონე ზუსტად ისეთი რჩება, როგორიც ge(ergonomic)-შია.
 
     // qwertyuiop
     key <AD01> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
@@ -60,13 +36,12 @@ xkb_symbols "ge-custom" {
     key <AD10> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
         [ Georgian_shin, 0x01001ca8, P, paragraph ] };
 
-    // აქ base ქართული უნდა დარჩეს: კ ქ
+    // base ქართული უნდა დარჩეს: კ ქ
     key <AD11> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
         [ Georgian_kan,  0x01001c99, braceleft, bracketleft ] };
     key <AD12> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
         [ Georgian_khar, 0x01001ca5, braceright, bracketright ] };
 
-    // \ კლავიშს ქართული ასო არ ეკავა, ამიტომ აქ US ლოგიკა დარჩება
     key <BKSL> { type[Group1] = "FOUR_LEVEL",
         [ backslash, bar, bar, backslash ] };
 
@@ -90,7 +65,7 @@ xkb_symbols "ge-custom" {
     key <AC09> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
         [ Georgian_rae,  0x01001ca0, L, 0x01002113 ] };   // ℓ
 
-    // აქ base ქართული უნდა დარჩეს: ბ გ
+    // base ქართული უნდა დარჩეს: ბ გ
     key <AC10> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
         [ Georgian_ban,  0x01001c91, colon, semicolon ] };
     key <AC11> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
@@ -112,7 +87,7 @@ xkb_symbols "ge-custom" {
     key <AB07> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
         [ Georgian_can,  0x01001caa, M, mu ] };
 
-    // აქ base ქართული უნდა დარჩეს: ლ ფ წ
+    // base ქართული უნდა დარჩეს: ლ ფ წ
     key <AB08> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
         [ Georgian_las,  0x01001c9a, less, comma ] };
     key <AB09> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
