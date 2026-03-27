@@ -3,13 +3,13 @@
 {
   services.xserver.xkb = {
     layout = "us,ge-custom";
-    variant = ",ergonomic";
+    variant = ",";
     options = "grp:win_space_toggle";
 
     extraLayouts.ge-custom = {
-      description = "Georgian ergonomic with Mtavruli on Shift";
+      description = "Georgian ergonomic with Mtavruli";
       languages = [ "kat" ];
-      symbolsFile = ./xkb/ge-custom;
+      symbolsFile = ./xkb/symbols/ge-custom;
     };
   };
 
