@@ -2,41 +2,115 @@ partial alphanumeric_keys
 xkb_symbols "ge-custom" {
 
     include "ge(ergonomic)"
-    name[Group1]= "Georgian (ergonomic, Mtavruli)";
+    name[Group1]= "Georgian (ergonomic, Mtavruli + US AltGr + Symbols)";
 
-    key <AD01> { type[Group1] = "ALPHABETIC", [ Georgian_chin,  0x01001ca9 ] };
-    key <AD02> { type[Group1] = "ALPHABETIC", [ Georgian_par,   0x01001c9e ] };
-    key <AD03> { type[Group1] = "ALPHABETIC", [ Georgian_un,    0x01001ca3 ] };
-    key <AD04> { type[Group1] = "ALPHABETIC", [ Georgian_jil,   0x01001cab ] };
-    key <AD05> { type[Group1] = "ALPHABETIC", [ Georgian_char,  0x01001cad ] };
-    key <AD06> { type[Group1] = "ALPHABETIC", [ Georgian_tar,   0x01001ca2 ] };
-    key <AD07> { type[Group1] = "ALPHABETIC", [ Georgian_tan,   0x01001c97 ] };
-    key <AD08> { type[Group1] = "ALPHABETIC", [ Georgian_nar,   0x01001c9c ] };
-    key <AD09> { type[Group1] = "ALPHABETIC", [ Georgian_vin,   0x01001c95 ] };
-    key <AD10> { type[Group1] = "ALPHABETIC", [ Georgian_shin,  0x01001ca8 ] };
-    key <AD11> { type[Group1] = "ALPHABETIC", [ Georgian_kan,   0x01001c99 ] };
-    key <AD12> { type[Group1] = "ALPHABETIC", [ Georgian_khar,  0x01001ca5 ] };
+    // === TOP ROW ===
 
-    key <AC01> { type[Group1] = "ALPHABETIC", [ Georgian_xan,   0x01001cae ] };
-    key <AC02> { type[Group1] = "ALPHABETIC", [ Georgian_in,    0x01001c98 ] };
-    key <AC03> { type[Group1] = "ALPHABETIC", [ Georgian_an,    0x01001c90 ] };
-    key <AC04> { type[Group1] = "ALPHABETIC", [ Georgian_en,    0x01001c94 ] };
-    key <AC05> { type[Group1] = "ALPHABETIC", [ Georgian_on,    0x01001c9d ] };
-    key <AC06> { type[Group1] = "ALPHABETIC", [ Georgian_don,   0x01001c93 ] };
-    key <AC07> { type[Group1] = "ALPHABETIC", [ Georgian_man,   0x01001c9b ] };
-    key <AC08> { type[Group1] = "ALPHABETIC", [ Georgian_san,   0x01001ca1 ] };
-    key <AC09> { type[Group1] = "ALPHABETIC", [ Georgian_rae,   0x01001ca0 ] };
-    key <AC10> { type[Group1] = "ALPHABETIC", [ Georgian_ban,   0x01001c91 ] };
-    key <AC11> { type[Group1] = "ALPHABETIC", [ Georgian_gan,   0x01001c92 ] };
+    key <TLDE> { type[Group1] = "FOUR_LEVEL",
+        [ grave, asciitilde, asciitilde, grave ] };
 
-    key <AB01> { type[Group1] = "ALPHABETIC", [ Georgian_jhan,  0x01001caf ] };
-    key <AB02> { type[Group1] = "ALPHABETIC", [ Georgian_hae,   0x01001cb0 ] };
-    key <AB03> { type[Group1] = "ALPHABETIC", [ Georgian_qar,   0x01001ca7 ] };
-    key <AB04> { type[Group1] = "ALPHABETIC", [ Georgian_ghan,  0x01001ca6 ] };
-    key <AB05> { type[Group1] = "ALPHABETIC", [ Georgian_zhar,  0x01001c9f ] };
-    key <AB06> { type[Group1] = "ALPHABETIC", [ Georgian_zen,   0x01001c96 ] };
-    key <AB07> { type[Group1] = "ALPHABETIC", [ Georgian_can,   0x01001caa ] };
-    key <AB08> { type[Group1] = "ALPHABETIC", [ Georgian_las,   0x01001c9a ] };
-    key <AB09> { type[Group1] = "ALPHABETIC", [ Georgian_phar,  0x01001ca4 ] };
-    key <AB10> { type[Group1] = "ALPHABETIC", [ Georgian_cil,   0x01001cac ] };
+    key <AE01> { type[Group1] = "FOUR_LEVEL",
+        [ 1, exclam, exclam, 1 ] };
+    key <AE02> { type[Group1] = "FOUR_LEVEL",
+        [ 2, at, at, 2 ] };
+    key <AE03> { type[Group1] = "FOUR_LEVEL",
+        [ 3, numbersign, numbersign, 3 ] };
+    key <AE04> { type[Group1] = "FOUR_LEVEL",
+        [ 4, dollar, dollar, 4 ] };
+    key <AE05> { type[Group1] = "FOUR_LEVEL",
+        [ 5, percent, percent, 5 ] };
+    key <AE06> { type[Group1] = "FOUR_LEVEL",
+        [ 6, asciicircum, asciicircum, 6 ] };
+    key <AE07> { type[Group1] = "FOUR_LEVEL",
+        [ 7, ampersand, ampersand, 7 ] };
+    key <AE08> { type[Group1] = "FOUR_LEVEL",
+        [ 8, asterisk, asterisk, 8 ] };
+    key <AE09> { type[Group1] = "FOUR_LEVEL",
+        [ 9, parenleft, parenleft, 9 ] };
+    key <AE10> { type[Group1] = "FOUR_LEVEL",
+        [ 0, parenright, parenright, 0 ] };
+    key <AE11> { type[Group1] = "FOUR_LEVEL",
+        [ minus, underscore, underscore, minus ] };
+    key <AE12> { type[Group1] = "FOUR_LEVEL",
+        [ equal, plus, plus, equal ] };
+
+    // === QWERTY ROW ===
+
+    key <AD01> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_chin, 0x01001ca9, Q, q, 0x01010f4 ] }; // ჴ
+    key <AD02> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_par, 0x01001c9e, W, w, 0x01010f5 ] }; // ჵ
+    key <AD03> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_un, 0x01001ca3, E, e, EuroSign ] };
+    key <AD04> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_jil, 0x01001cab, R, r, registered ] };
+    key <AD05> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_char, 0x01001cad, T, t, trademark ] };
+    key <AD06> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_tar, 0x01001ca2, Y, y, yen ] };
+    key <AD07> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_tan, 0x01001c97, U, u, 0x20BE ] }; // ₾
+    key <AD08> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_nar, 0x01001c9c, I, i, U2139 ] }; // ℹ
+    key <AD09> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_vin, 0x01001c95, O, o, copyright ] };
+    key <AD10> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_shin, 0x01001ca8, P, p, paragraph ] };
+
+    key <AD11> { type[Group1] = "FOUR_LEVEL",
+        [ bracketleft, braceleft, braceleft, bracketleft ] };
+    key <AD12> { type[Group1] = "FOUR_LEVEL",
+        [ bracketright, braceright, braceright, bracketright ] };
+    key <BKSL> { type[Group1] = "FOUR_LEVEL",
+        [ backslash, bar, bar, backslash ] };
+
+    // === ASDF ROW ===
+
+    key <AC01> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_xan, 0x01001cae, A, a, 0x01010f6 ] }; // ჶ
+    key <AC02> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_in, 0x01001c98, S, s, 0x01010f7 ] }; // ჷ
+    key <AC03> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_an, 0x01001c90, D, d, 0x01010f3 ] }; // ჳ
+    key <AC04> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_en, 0x01001c94, F, f, 0x01010f2 ] }; // ჲ
+    key <AC05> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_on, 0x01001c9d, G, g, section ] };
+    key <AC06> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_don, 0x01001c93, H, h, dagger ] };
+    key <AC07> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_man, 0x01001c9b, J, j, doubledagger ] };
+    key <AC08> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_san, 0x01001ca1, K, k, sterling ] };
+    key <AC09> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_rae, 0x01001ca0, L, l, U2113 ] }; // ℓ
+
+    key <AC10> { type[Group1] = "FOUR_LEVEL",
+        [ semicolon, colon, colon, semicolon ] };
+    key <AC11> { type[Group1] = "FOUR_LEVEL",
+        [ apostrophe, quotedbl, quotedbl, apostrophe ] };
+
+    // === ZXCV ROW ===
+
+    key <AB01> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_jhan, 0x01001caf, Z, z, 0x01010f1 ] }; // ჱ
+    key <AB02> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_hae, 0x01001cb0, X, x, multiply ] };
+    key <AB03> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_qar, 0x01001ca7, C, c, cent ] };
+    key <AB04> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_ghan, 0x01001ca6, V, v, U2713 ] }; // ✓
+    key <AB05> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_zhar, 0x01001c9f, B, b, U2022 ] }; // •
+    key <AB06> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_zen, 0x01001c96, N, n, notsign ] };
+    key <AB07> { type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        [ Georgian_can, 0x01001caa, M, m, mu ] };
+
+    key <AB08> { type[Group1] = "FOUR_LEVEL",
+        [ comma, less, less, comma ] };
+    key <AB09> { type[Group1] = "FOUR_LEVEL",
+        [ period, greater, greater, period ] };
+    key <AB10> { type[Group1] = "FOUR_LEVEL",
+        [ slash, question, question, slash ] };
 };
