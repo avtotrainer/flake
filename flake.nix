@@ -1,5 +1,5 @@
 {
-  description = "avto — NixOS flake (laptop + wsl)";
+  description = "avto — NixOS flake (laptop + delltc +  wsl)";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
@@ -25,6 +25,24 @@
         inherit system;
         modules = [
           ./hosts/laptop/default.nix
+
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "bak";
+
+            home-manager.users.avto = {
+              imports = [ ./home/avto.nix ];
+            };
+          }
+        ];
+      };
+
+      delltc = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          ./hosts/delltc/default.nix
 
           home-manager.nixosModules.home-manager
           {

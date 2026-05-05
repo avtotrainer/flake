@@ -1,0 +1,59 @@
+{ config, pkgs, lib, ... }:
+
+{
+  imports = [
+    ./hardware.nix
+    ./wallpaper.nix
+    ./wifi/mes.nix
+
+    ../../modules/nixos/base.nix
+    ../../modules/nixos/boot-silent.nix
+    ../../modules/nixos/power.nix
+    ../../modules/nixos/bluetooth.nix
+    ../../modules/nixos/audio.nix
+    ../../modules/nixos/graphics-intel.nix
+    ../../modules/nixos/fonts.nix
+    ../../modules/nixos/hyprland.nix
+    ../../modules/nixos/ssh.nix
+    ../../modules/nixos/ssl.nix
+    ../../modules/nixos/gnupg.nix
+
+
+    ../../modules/nixos/locale.nix
+    ../../modules/nixos/printing.nix
+    
+    ../../modules/nixos/keyboard-georgian.nix
+
+    ../../profiles/nixos/laptop.nix
+    ../../profiles/nixos/dev.nix
+
+    ../../users/users.nix
+    ../../users/avto.nix
+  ];
+
+  networking.hostName = "delltc";
+
+  # ----------------------------
+  # Networking (Laptop-specific)
+  # ----------------------------
+  networking.networkmanager.enable = true;
+
+  # ----------------------------
+  # Bootloader behavior
+  # ----------------------------
+  boot.loader.systemd-boot.configurationLimit = lib.mkForce 20;
+  boot.loader.timeout = lib.mkForce 3;
+
+  # ----------------------------
+  # System packages (Laptop)
+  # ----------------------------
+  environment.systemPackages = with pkgs; [
+    python312
+    python314
+    direnv
+    gnumake
+  ];
+
+  system.stateVersion = "25.11";
+}
+
