@@ -24,6 +24,10 @@
     
     ../../modules/nixos/keyboard-georgian.nix
 
+
+    ../../modules/nixos/tailscale.nix
+
+
     ../../profiles/nixos/laptop.nix
     ../../profiles/nixos/dev.nix
 
