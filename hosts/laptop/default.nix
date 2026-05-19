@@ -4,6 +4,7 @@
   imports = [
     ./hardware.nix
     ./wallpaper.nix
+    ./hostname.nix
     ./wifi/mes.nix
 
     ../../modules/nixos/base.nix
