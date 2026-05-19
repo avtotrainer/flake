@@ -23,6 +23,7 @@ in
       ./nvim/nvim.nix
       ./zsh/zsh.nix
       ./direnv/direnv.nix
+      ./ssh/delltc.nix
     ]
     ++ lib.optionals (!isWSL) [
       ./config/config.nix
