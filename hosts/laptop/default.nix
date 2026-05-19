@@ -35,7 +35,7 @@
     ../../users/avto.nix
   ];
 
-  networking.hostName = "nixos";
+  # networking.hostName = "nixos";
 
   # ----------------------------
   # Networking (Laptop-specific)
