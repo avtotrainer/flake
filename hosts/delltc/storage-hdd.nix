@@ -2,16 +2,8 @@
 
 {
   ##################################################
-  # DELLTC LOCAL HDD STORAGE
-  #
-  # ეს დისკი ეკუთვნის მხოლოდ delltc host-ს.
-  # ამიტომ კონფიგურაცია ინახება host-ის შიგნით,
-  # არა საერთო modules/nixos-ში.
+  # STORAGE HDD — delltc only
   ##################################################
-
-  systemd.tmpfiles.rules = [
-    "d /srv/storage 0755 root root - -"
-  ];
 
   fileSystems."/srv/storage" = {
     device = "/dev/disk/by-uuid/90d2f1fa-faf8-4517-9088-e98e3ea8886a";
@@ -21,4 +13,22 @@
       "noatime"
     ];
   };
+
+  ##################################################
+  # STORAGE ACCESS GROUP
+  ##################################################
+
+  users.groups.storage = {};
+
+  users.users.avto.extraGroups = [
+    "storage"
+  ];
+
+  ##################################################
+  # STORAGE DIRECTORY PERMISSIONS
+  ##################################################
+
+  systemd.tmpfiles.rules = [
+    "d /srv/storage 2770 root storage - -"
+  ];
 }
