@@ -27,6 +27,11 @@ in
         identityFile = "~/.ssh/id_ed25519_din_recovery";
         identitiesOnly = true;
       };
+      
+      "*" = {
+      serverAliveInterval = 30;
+      serverAliveCountMax = 3;
+      };
     };
   };
 }
