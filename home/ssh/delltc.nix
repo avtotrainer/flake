@@ -27,6 +27,12 @@ in
         identityFile = "~/.ssh/id_ed25519_din_recovery";
         identitiesOnly = true;
       };
+
+      "inu" = {
+      hostname = "130.61.116.60"; # რეალური IP მისამართი
+      user = "ubuntu";
+      identityFile = "~/.ssh/id_rsa"; # თქვენი SSH Key-ს მისამართი
+      };
       
       "*" = {
       serverAliveInterval = 30;
