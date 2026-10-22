@@ -29,7 +29,7 @@
       {
         name = "HP_M102w";
         location = "Wi-Fi";
-        deviceUri = "ipp://192.168.0.5/ipp/print";
+        deviceUri = "ipp://192.168.100.5/ipp/print";
         model = "everywhere";
 
         ppdOptions = {
