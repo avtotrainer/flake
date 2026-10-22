@@ -5,6 +5,8 @@
   services.printing = {
     enable = true;
 
+    browsed.enable = false;
+
     drivers = [
       pkgs.hplip
       pkgs.cups-filters
