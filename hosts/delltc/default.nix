@@ -9,6 +9,7 @@
 
 
     ../../modules/nixos/base.nix
+    ../../modules/nixos/overlays.nix
     ../../modules/nixos/boot-silent.nix
     ../../modules/nixos/power.nix
     ../../modules/nixos/bluetooth.nix

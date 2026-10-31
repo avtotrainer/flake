@@ -38,6 +38,9 @@ in
     ripgrep
     tmux
     vifm
+
+    # Claude Code (CLI) — overlay: modules/nixos/overlays.nix, დოკ.: docs/tools/claude-code.md
+    claude-code
   ];
 
   programs.git.enable = true;

@@ -13,9 +13,16 @@
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Claude Code — community flake, ახალი ვერსია ~1 საათში (nixpkgs კვირებით აგვიანებს).
+    # overlay იყენებს ჩვენს pkgs-ს (final.callPackage), ამიტომ follows — ზედმეტი nixpkgs არ ჩამოიტვირთება.
+    claude-code = {
+      url = "github:sadjow/claude-code-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-wsl, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, nixos-wsl, ... }:
   let
     system = "x86_64-linux";
   in {
@@ -23,6 +30,7 @@
 
       laptop = nixpkgs.lib.nixosSystem {
         inherit system;
+        specialArgs = { inherit inputs; };
         modules = [
           ./hosts/laptop/default.nix
 
@@ -41,6 +49,7 @@
 
       delltc = nixpkgs.lib.nixosSystem {
         inherit system;
+        specialArgs = { inherit inputs; };
         modules = [
           ./hosts/delltc/default.nix
 
@@ -59,6 +68,7 @@
 
       wsl = nixpkgs.lib.nixosSystem {
         inherit system;
+        specialArgs = { inherit inputs; };
         modules = [
           nixos-wsl.nixosModules.default
 
