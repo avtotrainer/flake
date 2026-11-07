@@ -1,15 +1,22 @@
-# windows/keyboard — ge-custom განლაგება Windows-ისთვის (kbdgemtv.dll)
+# windows/keyboard — ქართული განლაგებები Windows-ისთვის (მთავრულით)
 
-NixOS-ის `modules/nixos/xkb/symbols/ge-custom` (ერგონომიკული ქართული, Caps Lock/Shift → მთავრული) Windows-ის keyboard layout DLL-ად.
-ინსტალაციის ჰენდაუტი: [`docs/windows/keyboard-install.md`](../../docs/windows/keyboard-install.md).
+| DLL | სახელი Windows-ში | წყარო | Caps Lock | ჰენდაუტი |
+|---|---|---|---|---|
+| `kbdgemtv.dll` | Georgian (Ergonomic, Mtavruli) - avto | NixOS-ის `modules/nixos/xkb/symbols/ge-custom` (+ `src/ergonomic.xkb`) | = Shift (Shift-იც მთავრულია) | [`keyboard-install.md`](../../docs/windows/keyboard-install.md) |
+| `kbdgeqmt.dll` | Georgian (QWERTY, Mtavruli) | `src/ge-basic.xkb` = xkeyboard-config `ge(basic)` | ცალკე დონე: ყველა ქართული ასო → მთავრული, Shift-ის ასოც | [`keyboard-qwerty-install.md`](../../docs/windows/keyboard-qwerty-install.md) |
+
+ერგონომიკული — ჩემთვის (NixOS-ის ასლი); QWERTY — სხვებისთვის: Windows-ის ჩვეულებრივი Georgian (QWERTY), სადაც Shift უკვე ჭ/ღ/თ/შ/ჟ/ძ/ჩ-ს წერს, ამიტომ მთავრული მხოლოდ Caps Lock-ით.
 
 ---
 
 ## 1. გადაწყვეტილების კლასიფიკაცია
 
 - ფენა: **არც System, არც User** — ეს NixOS-ის კონფიგურაცია არ არის, ამიტომ `modules/`-ში და `home/`-ში არ დევს. ცალკე დირექტორიაა `windows/`, flake-ის evaluation-ში არ მონაწილეობს.
-- წყარო: **ერთადერთი** — `ge-custom`. Windows-ის ფაილები მისგან გენერირდება; `kbdgemtv.klc` და DLL-ები ხელით არ იცვლება.
+- წყარო: xkb ფაილები. `klc/*.klc` და DLL-ები გენერირდება, ხელით არ იცვლება.
 - აგება: clang + lld-link (cross-compile Linux-ზე). MSKLC და Windows არ სჭირდება; ARM64 DLL-საც აგებს, რასაც MSKLC ვერ აკეთებს.
+- Caps Lock-ის ორი რეჟიმი (`tools/xkb2klc.py --caps`):
+  - `alpha` — Windows-ის `CAPLOK`: Caps = Shift. ერგონომიკულისთვის, სადაც Shift უკვე მთავრულია.
+  - `sgcaps` — Windows-ის `SGCAPS`: Caps-ს საკუთარი სვეტები აქვს (Caps, Caps+Shift). ყველა ქართული ასო → მთავრული (U+10D0 → U+1C90), დანარჩენი უცვლელი. Caps-ის სტრიქონში Ctrl/AltGr სვეტები ძირითადის ასლია — Windows Caps Lock-ის დროს მთლიანად ამ სტრიქონს კითხულობს.
 
 ---
 
@@ -17,18 +24,20 @@ NixOS-ის `modules/nixos/xkb/symbols/ge-custom` (ერგონომიკ�
 
 | ფაილი | რა არის | რედაქტირდება? |
 |---|---|---|
-| `build.sh` | მთელი ციკლი: xkb → klc → C ცხრილები → 4 DLL → შემოწმება → zip | `VERSION` |
-| `src/ergonomic.xkb` | xkeyboard-config-ის `ge(ergonomic)` სექცია, რომელსაც `ge-custom` `include`-ით იყენებს (ზედა რიგი, `«»`) | იშვიათად |
-| `src/kbdgemtv.c` | kbd.h-თავსებადი სტრუქტურები, scan code → VK ცხრილი, `KbdLayerDescriptor` | იშვიათად |
-| `src/kbdgemtv.rc` | ვერსიის რესურსი + სტრიქონი 1000 (`Layout Display Name`) | `VERSION`-თან ერთად |
-| `tools/xkb2klc.py` | `ergonomic.xkb` + `ge-custom` → `kbdgemtv.klc` | — |
-| `tools/klc2c.py` | `kbdgemtv.klc` → `build/kbdgemtv_tables.inc` | — |
-| `tools/verify_kbd.py` | აგებული DLL-დან კითხულობს KBDTABLES-ს და ადარებს `.klc`-ს | — |
-| `kbdgemtv.klc` | გენერირებული; MSKLC-შიც იხსნება | **არა** (build.sh წერს) |
-| `installer/` | `install.cmd/.ps1`, `install-system.ps1`, `uninstall.cmd/.ps1` | — |
+| `build.sh` | ორივე განლაგება: xkb → klc → C ცხრილები → 4 DLL → შემოწმება → zip; ვერსიები და თვითშემოწმების ტესტები | `layout …` სტრიქონები, `tests_*` |
+| `src/ergonomic.xkb` | xkeyboard-config-ის `ge(ergonomic)` (ზედა რიგი, `«»`), რომელსაც `ge-custom` `include`-ით იყენებს | იშვიათად |
+| `src/ge-basic.xkb` | xkeyboard-config-ის `ge(basic)` — Georgian QWERTY (xkb-data 2.41) | იშვიათად |
+| `src/kbdlayout.c` | kbd.h-თავსებადი სტრუქტურები, scan code → VK, `KbdLayerDescriptor` — საერთო ორივესთვის | იშვიათად |
+| `src/kbdlayout.rc.in` | ვერსიის რესურსი + სტრიქონი 1000 (`Layout Display Name`), `@DLL@`/`@TEXT@` ჩანაცვლებით | — |
+| `tools/xkb2klc.py` | xkb → `.klc` (`--caps alpha|sgcaps`) | — |
+| `tools/klc2c.py` | `.klc` → `build/<id>/kbdlayout_tables.inc` (SGCAPS → დამატებითი სტრიქონი VK 0xFF) | — |
+| `tools/verify_kbd.py` | აგებული DLL-დან კითხულობს KBDTABLES-ს და ადარებს `.klc`-ს (SGCaps-ის ჩათვლით) | — |
+| `klc/*.klc` | გენერირებული; MSKLC-შიც იხსნება | **არა** |
+| `installer/` | `install.cmd/.ps1`, `install-system.ps1`, `uninstall.cmd/.ps1` — საერთო; განლაგებას კითხულობს `layout.psd1`-დან (build.sh წერს) | — |
 | `build/`, `dist/` | აგების შედეგი, `.gitignore`-შია | — |
 
 DLL-ის ვარიანტები: `amd64` (x64), `i386` (32-ბიტიანი Windows), `arm64`, `wow64` (32-ბიტიანი კოდი 64-ბიტიანი პოინტერებით — `SysWOW64`-ისთვის).
+პაკეტები: `dist/<id>-windows-<ver>.zip` (ყველა) და `dist/<id>-windows-<ver>-x64.zip` (amd64 + wow64, სკოლისთვის).
 
 ---
 
@@ -36,15 +45,15 @@ DLL-ის ვარიანტები: `amd64` (x64), `i386` (32-ბიტ�
 
 ```bash
 cd ~/flake
-$EDITOR modules/nixos/xkb/symbols/ge-custom      # 1. ცვლილება მხოლოდ აქ
+$EDITOR modules/nixos/xkb/symbols/ge-custom      # 1. ერგონომიკულის ცვლილება მხოლოდ აქ
 git commit -am "ge-custom: …"                     #    + nixos-rebuild, როგორც ყოველთვის
 
 cd windows/keyboard
-$EDITOR build.sh                                  # 2. VERSION++
+$EDITOR build.sh                                  # 2. შესაბამის `layout` სტრიქონში pkgver++
 nix shell nixpkgs#llvmPackages.clang-unwrapped nixpkgs#lld \
           nixpkgs#llvmPackages.llvm nixpkgs#python3 -c ./build.sh   # 3. აგება + შემოწმება
-git add kbdgemtv.klc build.sh && git commit -m "windows/keyboard: vX.Y.Z"
-# 4. dist/kbdgemtv-windows-X.Y.Z.zip → Drive „ქართული კლავიატურა Windows (kbdgemtv)“
+git add klc build.sh && git commit -m "windows/keyboard: <id> vX.Y.Z"
+# 4. dist/<id>-windows-X.Y.Z-x64.zip → Drive-ის შესაბამისი საქაღალდე
 ```
 
 მოსალოდნელი გამოსავალი თითო DLL-ზე: `50 keys checked, 0 mismatches`.
@@ -56,7 +65,9 @@ git add kbdgemtv.klc build.sh && git commit -m "windows/keyboard: vX.Y.Z"
 ## 4. რას აკეთებს ინსტალერი
 
 1. `install-system.ps1` (ადმინით): DLL → `System32` (+ `wow64` → `SysWOW64`), რეესტრი `HKLM\SYSTEM\CurrentControlSet\Control\Keyboard Layouts\a0NN0437`: `Layout File`, `Layout Text`, `Layout Display Name`, `Layout Id` (თავისუფალი ნომერი).
-2. `install.ps1` (მომხმარებლით): თუ იგივე DLL უკვე დაყენებულია — ადმინს არ ითხოვს; ქართულის სიაში ამატებს `0437:a0NN0437`-ს; ამოწმებს `ToUnicodeEx`-ით `Q`, `Shift+Q`, `CapsLock+Q`.
+2. `install.ps1` (მომხმარებლით): თუ იგივე DLL უკვე დაყენებულია — ადმინს არ ითხოვს; ქართულის სიაში ამატებს `0437:a0NN0437`-ს (სხვა ქართულ განლაგებებს აშორებს, თუ არ არის `-KeepOtherGeorgian`); ამოწმებს `ToUnicodeEx`-ით `layout.psd1`-ის `Tests`-ს.
+
+ორივე განლაგება ერთ კომპიუტერზე შეიძლება დადგეს — თითოს თავისი KLID და `Layout Id` აქვს.
 
 ---
 
@@ -64,7 +75,9 @@ git add kbdgemtv.klc build.sh && git commit -m "windows/keyboard: vX.Y.Z"
 
 | შეცდომა | რატომ ხდება | სწორი გზა |
 |---|---|---|
-| `kbdgemtv.klc`-ის ხელით შესწორება | შემდეგი `build.sh` გადაწერს; NixOS და Windows ერთმანეთს დაშორდება | მხოლოდ `ge-custom` → `build.sh` |
+| `klc/*.klc`-ის ხელით შესწორება | შემდეგი `build.sh` გადაწერს; NixOS და Windows ერთმანეთს დაშორდება | მხოლოდ xkb წყარო → `build.sh` |
+| SGCAPS-ის Caps სტრიქონში Ctrl/AltGr = `WCH_NONE` | Caps Lock-ის დროს Windows მთელ სტრიქონს კითხულობს → Caps+AltGr არაფერს წერს | `klc2c.py` ძირითადი სტრიქონის სვეტებს აკოპირებს; `verify_kbd.py` ამოწმებს |
+| `@(@(0x10,0x80))` PowerShell-ში | ერთელემენტიანი მასივი ბრტყელდება → `@(0x10,0x80)` | `@(,@(0x10,0x80))` |
 | `nix shell nixpkgs#clang` | wrapped clang Linux/glibc ფლაგებს ამატებს Windows target-ზე | `llvmPackages.clang-unwrapped` |
 | ახალი DLL იმავე `VERSION`-ით | ინსტალერი ჰეშს ადარებს; ძველი, ჩატვირთული DLL ვერ გადაიწერება | `VERSION++`; კომპიუტერზე `uninstall.cmd` → reboot → `install.cmd` |
 | Settings: „Unavailable input method“ ინსტალაციის შემდეგ | Windows-ს სესიაში განლაგება ჯერ არ ჩაუტვირთავს | Sign out → Sign in |

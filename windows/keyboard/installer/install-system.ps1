@@ -1,9 +1,10 @@
-﻿# kbdgemtv — სისტემური ინსტალაცია (ადმინისტრატორის უფლებით): DLL-ები + რეესტრი
+﻿# კლავიატურის განლაგება — სისტემური ინსტალაცია (ადმინისტრატორის უფლებით): DLL-ები + რეესტრი
 $ErrorActionPreference = 'Stop'
 trap { Write-Host $_ -ForegroundColor Red; Read-Host 'შეცდომა. დააჭირეთ Enter-ს'; exit 1 }
-$Dll  = 'kbdgemtv.dll'
-$Text = 'Georgian (Ergonomic, Mtavruli) - avto'
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
+$L    = Import-PowerShellDataFile (Join-Path $here 'layout.psd1')   # build.sh-ის მიერ: Dll, Text, Tests
+$Dll  = $L.Dll
+$Text = $L.Text
 Get-ChildItem -Recurse $here | Unblock-File -ErrorAction SilentlyContinue
 
 $arch = if ($env:PROCESSOR_ARCHITEW6432) { $env:PROCESSOR_ARCHITEW6432 } else { $env:PROCESSOR_ARCHITECTURE }
@@ -45,4 +46,3 @@ New-ItemProperty $k 'Layout File' -Value $Dll -PropertyType String -Force | Out-
 New-ItemProperty $k 'Layout Text' -Value $Text -PropertyType String -Force | Out-Null
 New-ItemProperty $k 'Layout Display Name' -Value "@%SystemRoot%\system32\$Dll,-1000" -PropertyType ExpandString -Force | Out-Null
 Write-Host "რეესტრში დარეგისტრირდა: $klid"
-Set-Content -Path (Join-Path $env:ProgramData 'kbdgemtv.klid') -Value $klid

@@ -1,6 +1,8 @@
-﻿# kbdgemtv — წაშლა: მომხმარებლის სიიდან, რეესტრიდან და სისტემიდან
+﻿# კლავიატურის განლაგება — წაშლა: მომხმარებლის სიიდან, რეესტრიდან და სისტემიდან
 $ErrorActionPreference = 'Stop'
-$Dll = 'kbdgemtv.dll'
+$here = Split-Path -Parent $MyInvocation.MyCommand.Path
+$L    = Import-PowerShellDataFile (Join-Path $here 'layout.psd1')   # build.sh-ის მიერ: Dll, Text, Tests
+$Dll  = $L.Dll
 $isAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 $root = 'HKLM:\SYSTEM\CurrentControlSet\Control\Keyboard Layouts'
 $klid = (Get-ItemProperty "$root\*" | Where-Object { $_.'Layout File' -ieq $Dll } | Select-Object -First 1).PSChildName
@@ -23,5 +25,4 @@ foreach ($d in "$env:windir\System32", "$env:windir\Sysnative", "$env:windir\Sys
         catch { Write-Warning "$f გამოყენებაშია — გადატვირთვის შემდეგ uninstall.cmd ხელახლა გაუშვით." }
     }
 }
-Remove-Item (Join-Path $env:ProgramData 'kbdgemtv.klid') -ErrorAction SilentlyContinue
 Start-Sleep 3

@@ -51,14 +51,8 @@ https://drive.google.com/drive/folders/1FW8YVg316gqT8j1G5fLfpDmXdsT-o0CC
 3. საქაღალდეში `kbdgemtv` ორჯერ დააწკაპუნეთ **`install.cmd`**-ზე.
    - თუ გამოჩნდა „Windows protected your PC“ → **More info** → **Run anyway**.
 4. გამოჩნდება UAC ფანჯარა → **Yes** (ან ადმინის პაროლი).
-5. დაელოდეთ შავ ფანჯარაში ტექსტს:
-   ```text
-   Q           -> ჩ
-   Shift+Q     -> Ჩ
-   CapsLock+Q  -> Ჩ
-   შემოწმება: OK (ჩ / Ჩ / Ჩ)
-   ```
-   მწვანე **OK** ნიშნავს, რომ განლაგება სწორად მუშაობს. დააჭირეთ ნებისმიერ ღილაკს.
+5. დაელოდეთ შავ ფანჯარაში შემოწმებას — `Q -> ჩ`, `Shift+Q -> Ჩ`, `CapsLock+Q -> Ჩ` და ბოლოს მწვანე **შემოწმება: OK**.
+   ეს ნიშნავს, რომ განლაგება სწორად მუშაობს. დააჭირეთ ნებისმიერ ღილაკს.
 6. **გამოდით სისტემიდან და ხელახლა შედით** (Start → მომხმარებლის სახელი → **Sign out**).
    ამის გარეშე Settings-ში შეიძლება ეწეროს „Unavailable input method“.
 
@@ -115,6 +109,6 @@ cd ~/flake/windows/keyboard
 nix shell nixpkgs#llvmPackages.clang-unwrapped nixpkgs#lld nixpkgs#llvmPackages.llvm nixpkgs#python3 -c ./build.sh
 ```
 
-შედეგი: `dist/kbdgemtv-windows-<VERSION>.zip` (ყველა არქიტექტურა) და `dist/kbdgemtv-windows-<VERSION>-x64.zip` (სკოლისთვის) — x64 ატვირთეთ Drive-ის საქაღალდეში (ძველი ვერსია წაშალეთ). `build.sh` თითოეულ DLL-ს ამოწმებს (`50 keys checked, 0 mismatches`) და აგება განმეორებადია (`/Brepro`): იგივე წყარო → ბაიტ-ბაიტ იგივე DLL.
+შედეგი: `dist/kbdgemtv-windows-<VERSION>.zip` (ყველა არქიტექტურა) და `dist/kbdgemtv-windows-<VERSION>-x64.zip` (სკოლისთვის); იგივე `kbdgeqmt`-ისთვის — x64 ატვირთეთ Drive-ის საქაღალდეში (ძველი ვერსია წაშალეთ). `build.sh` თითოეულ DLL-ს ამოწმებს (`50 keys checked, 0 mismatches`) და აგება განმეორებადია (`/Brepro`): იგივე წყარო → ბაიტ-ბაიტ იგივე DLL.
 
-დეტალები: `windows/keyboard/README.md`.
+დეტალები: `windows/keyboard/README.md`. QWERTY ვერსია სხვებისთვის: [`keyboard-qwerty-install.md`](keyboard-qwerty-install.md).

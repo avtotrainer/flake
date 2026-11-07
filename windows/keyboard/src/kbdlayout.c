@@ -1,6 +1,7 @@
 /*
- * kbdgemtv.dll — Georgian (Ergonomic, Mtavruli) keyboard layout for Windows.
- * Generated tables: kbdgemtv_tables.inc (from kbdgemtv.klc, which comes from xkb ge-custom).
+ * Windows keyboard layout DLL (kbdgemtv.dll, kbdgeqmt.dll, ...): საერთო სტრუქტურები.
+ * ცხრილები: kbdlayout_tables.inc — build.sh აგენერირებს <layout>.klc-დან (tools/klc2c.py),
+ * .klc კი xkb წყაროდან (tools/xkb2klc.py).
  * Structures follow kbd.h (Windows DDK), KBD_VERSION 1.
  *
  * Build variants:
@@ -21,6 +22,7 @@ typedef unsigned short WCHAR;
 #endif
 
 #define CAPLOK       0x01
+#define SGCAPS       0x02
 #define CAPLOKALTGR  0x04
 #define WCH_NONE     0xF000
 #define SHFT_INVALID 0x0F
@@ -101,7 +103,7 @@ static const MODIFIERS CharModifiers = {
  { 0, 1, 2, SHFT_INVALID, SHFT_INVALID, SHFT_INVALID, 3, 4 }
 };
 
-#include "kbdgemtv_tables.inc"   /* build.sh აგენერირებს: tools/klc2c.py */
+#include "kbdlayout_tables.inc"   /* build.sh აგენერირებს: tools/klc2c.py */
 
 static const VK_TO_WCHAR_TABLE aVkToWcharTable[] = {
  { PI(aVkToWch5), 5, sizeof(VK_TO_WCHARS5) },

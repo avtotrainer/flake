@@ -1,10 +1,20 @@
 #!/usr/bin/env python3
-"""ge(ergonomic) + ge-custom (xkb) -> Windows MSKLC .klc
+"""xkb symbols -> Windows MSKLC .klc
 
-usage: xkb2klc.py <ergonomic.xkb> <ge-custom> <out.klc>
+usage: xkb2klc.py --dll NAME --text "Layout Text" --caps alpha|sgcaps --out OUT.klc XKB [XKB...]
+
+  XKB      xkb_symbols ფაილები; შემდეგი ფაილის key-ები წინას გადაფარავს (როგორც include)
+  alpha    Caps Lock = Shift (FOUR_LEVEL_ALPHABETIC გასაღებებზე) — ერგონომიკული, სადაც Shift = მთავრული
+  sgcaps   Caps Lock ცალკე დონეა: ყველა ქართული ასო → მთავრული, Shift-ის ასოც (Caps+Shift+W → Ჭ);
+           დანარჩენი (ლათინური, ციფრები, სიმბოლოები) არ იცვლება — QWERTY, სადაც Shift უკვე დაკავებულია
 """
-import re, sys
-ERGO, CUSTOM, OUT = sys.argv[1:4]
+import argparse, re, sys
+ap = argparse.ArgumentParser()
+ap.add_argument("--dll", required=True); ap.add_argument("--text", required=True)
+ap.add_argument("--caps", choices=("alpha", "sgcaps"), required=True)
+ap.add_argument("--out", required=True); ap.add_argument("xkb", nargs="+")
+A = ap.parse_args()
+OUT = A.out
 G = "an ban gan don en vin zen tan in kan las man nar on par zhar rae san tar un phar khar ghan qar shin chin can jil cil char xan jhan hae he hie we har hoe fi".split()
 KS = {f"Georgian_{n}": 0x10D0+i for i, n in enumerate(G)}
 KS.update(dict(asciitilde=0x7e, grave=0x60, minus=0x2d, underscore=0x5f, equal=0x3d, plus=0x2b,
@@ -27,7 +37,8 @@ def parse(path):
         name, pre, syms = m.groups()
         keys[name] = ([cp(x.strip()) for x in syms.split(",")], "ALPHABETIC" in pre)
     return keys
-keys = parse(ERGO); keys.update(parse(CUSTOM))
+keys = {}
+for f in A.xkb: keys.update(parse(f))
 # xkb key -> (scancode, VK)
 POS = {"TLDE":("29","OEM_3"),"AE11":("0c","OEM_MINUS"),"AE12":("0d","OEM_PLUS"),
  "AD11":("1a","OEM_4"),"AD12":("1b","OEM_6"),"BKSL":("2b","OEM_5"),"AC10":("27","OEM_1"),
@@ -39,14 +50,22 @@ for i, c in enumerate("ASDFGHJKL"):  POS[f"AC{i+1:02d}"] = (f"{0x1e+i:02x}", c)
 for i, c in enumerate("ZXCVBNM"):    POS[f"AB{i+1:02d}"] = (f"{0x2c+i:02x}", c)
 CTRL = {"OEM_4":0x1b, "OEM_6":0x1d, "OEM_5":0x1c, "OEM_102":0x1c}
 h = lambda v: "-1" if v is None else f"{v:04x}"
+geo = lambda c: c is not None and (0x10D0 <= c <= 0x10FA or 0x10FD <= c <= 0x10FF)   # მხედრული, რომელსაც მთავრული აქვს
+mt = lambda c: c + 0xBC0 if geo(c) else c                                            # ა U+10D0 → Ა U+1C90
 rows = []
 order = sorted(POS, key=lambda k: int(POS[k][0], 16))
 for k in order:
     syms, alpha = keys[k]
     syms = (syms + [None]*4)[:4]
     sc, vk = POS[k]
-    cap = 5 if alpha else 0          # 5 = CapsLock -> Shift და AltGr-ის დონეებზეც (FOUR_LEVEL_ALPHABETIC)
-    rows.append(f"{sc}\t{vk}\t\t{cap}\t{h(syms[0])}\t{h(syms[1])}\t{h(CTRL.get(vk))}\t{h(syms[2])}\t{h(syms[3])}")
+    tail = f"{h(syms[0])}\t{h(syms[1])}\t{h(CTRL.get(vk))}\t{h(syms[2])}\t{h(syms[3])}"
+    if A.caps == "sgcaps" and (geo(syms[0]) or geo(syms[1])):
+        # SGCap: შემდეგი სტრიქონი = Caps და Caps+Shift
+        rows.append(f"{sc}\t{vk}\t\tSGCap\t{tail}")
+        rows.append(f"-1\t-1\t\t0\t{h(mt(syms[0]))}\t{h(mt(syms[1]))}")
+        continue
+    cap = 5 if (A.caps == "alpha" and alpha) else 0   # 5 = CapsLock -> Shift და AltGr-ის დონეებზეც (FOUR_LEVEL_ALPHABETIC)
+    rows.append(f"{sc}\t{vk}\t\t{cap}\t{tail}")
 rows.append("39\tSPACE\t\t0\t0020\t0020\t0020\t-1\t-1")
 rows.append("53\tDECIMAL\t\t0\t002e\t002e\t-1\t-1\t-1")
 KEYNAME = """KEYNAME
@@ -128,7 +147,7 @@ KEYNAME_EXT
 5c	"Right Windows"
 5d	Application
 """
-out = f'''KBD\tkbdgemtv\t"Georgian (Ergonomic, Mtavruli) - avto"
+out = f'''KBD\t{A.dll}\t"{A.text}"
 
 COPYRIGHT\t"(c) 2026 avtotrainer"
 
@@ -158,7 +177,7 @@ LAYOUT\t\t;an extra '@' at the end is a dead key
 {KEYNAME}
 DESCRIPTIONS
 
-0409\tGeorgian (Ergonomic, Mtavruli) - avto
+0409\t{A.text}
 
 LANGUAGENAMES
 
@@ -167,4 +186,4 @@ LANGUAGENAMES
 ENDKBD
 '''
 open(OUT, "w", encoding="utf-16", newline="\r\n").write(out)
-print(f"{OUT}: {len(rows)} keys")
+print(f"{OUT}: {sum(1 for r in rows if not r.startswith('-1'))} keys")

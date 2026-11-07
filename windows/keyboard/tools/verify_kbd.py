@@ -60,7 +60,14 @@ while True:
     if not p: break
     q = off(p)
     while d[q]:
-        tables.setdefault(d[q], (d[q+1], struct.unpack_from(f"<{n}H", d, q+2)))
+        vk, attr, w = d[q], d[q+1], struct.unpack_from(f"<{n}H", d, q+2)
+        sg = None
+        if attr & 0x02:   # SGCAPS: შემდეგი ჩანაწერი (VK 0xFF) = Caps, Caps+Shift
+            q += sz; assert d[q] == 0xFF, f"SGCAPS without 0xFF row for vk {vk:#x}"
+            sg = list(struct.unpack_from(f"<{n}H", d, q+2))
+            assert sg[2:] == list(w[2:]), f"SGCAPS row for vk {vk:#x}: Ctrl/AltGr columns differ"
+            sg = sg[:2]
+        if vk != 0xFF: tables.setdefault(vk, (attr, w, sg))
         q += sz
     tt += 2*W
 # scan code -> vk
@@ -71,16 +78,23 @@ kn = ptr(fields["kn"]+W); s = off(kn); keyname = d[s:d.index(b"\0\0", s)+1].deco
 VKN = {"OEM_1":0xBA,"OEM_PLUS":0xBB,"OEM_COMMA":0xBC,"OEM_MINUS":0xBD,"OEM_PERIOD":0xBE,"OEM_2":0xBF,
        "OEM_3":0xC0,"OEM_4":0xDB,"OEM_5":0xDC,"OEM_6":0xDD,"OEM_7":0xDE,"OEM_102":0xE2,"SPACE":0x20,"DECIMAL":0x6E}
 lay = open(klc, encoding="utf-16").read().split("LAYOUT")[1].split("KEYNAME")[0]
-bad = 0; n = 0
+bad = 0; n = 0; prev = None
 for line in lay.splitlines():
     fl = line.split()
-    if len(fl) < 8 or line.startswith("//") or len(fl[0]) != 2: continue
+    if line.startswith("//"): continue
+    if len(fl) >= 5 and fl[0] == "-1" and prev:          # SGCap-ის Caps სტრიქონი
+        want = [int(x, 16) for x in fl[3:5]]
+        if tables[prev][2] != want:
+            bad += 1; print("MISMATCH caps", fl, tables[prev][2])
+        continue
+    if len(fl) < 8 or len(fl[0]) != 2: continue
     sc = int(fl[0], 16); vk = VKN.get(fl[1], ord(fl[1]) if len(fl[1]) == 1 else None)
     want = [0xF000 if x == "-1" else int(x, 16) for x in fl[3:8]]
-    attr, got = tables[vk]
+    attr, got, _ = tables[vk]
+    prev = vk if fl[2] == "SGCap" else None
     got = list(got) + [0xF000]*(5-len(got))
     if fl[1] == "DECIMAL": want, got = want[:1], got[:1]
-    capw = {0:0, 1:1, 4:4, 5:5}[int(fl[2])]
+    capw = 2 if fl[2] == "SGCap" else int(fl[2])
     if fl[1] == "DECIMAL": vsc[sc] = vk
     if (vsc[sc] & 0xff) != vk or got != want or (fl[1] != "DECIMAL" and attr != capw):
         bad += 1; print("MISMATCH", fl, hex(vsc[sc]), attr, [hex(x) for x in got])

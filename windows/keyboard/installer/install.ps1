@@ -1,8 +1,9 @@
-﻿# kbdgemtv — ინსტალაცია: 1) სისტემური ნაწილი ადმინით, 2) განლაგება მიმდინარე მომხმარებელს
+﻿# კლავიატურის განლაგება — ინსტალაცია: 1) სისტემური ნაწილი ადმინით, 2) განლაგება მიმდინარე მომხმარებელს
 param([switch]$KeepOtherGeorgian)
 $ErrorActionPreference = 'Stop'
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
-$Dll  = 'kbdgemtv.dll'
+$L    = Import-PowerShellDataFile (Join-Path $here 'layout.psd1')   # build.sh-ის მიერ: Dll, Text, Tests
+$Dll  = $L.Dll
 
 $isAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 $sysScript = Join-Path $here 'install-system.ps1'
@@ -33,20 +34,30 @@ if ($ka.InputMethodTips -notcontains $tip) { $ka.InputMethodTips.Add($tip) }
 Set-WinUserLanguageList $list -Force
 Write-Host "დაემატა თქვენს ენებს: $tip"
 
-# თვითშემოწმება: ჩაიტვირთება თუ არა განლაგება და რას წერს Q კლავიში
+# თვითშემოწმება: ჩაიტვირთება თუ არა განლაგება და რას წერს თითო ტესტი (layout.psd1 → Tests)
 Add-Type -Namespace K -Name U -MemberDefinition @'
 [DllImport("user32.dll", CharSet=CharSet.Unicode)] public static extern IntPtr LoadKeyboardLayout(string id, uint flags);
 [DllImport("user32.dll", CharSet=CharSet.Unicode)] public static extern int ToUnicodeEx(uint vk, uint sc, byte[] st, System.Text.StringBuilder b, int n, uint f, IntPtr hkl);
 '@
 $hkl = [K.U]::LoadKeyboardLayout($klid, 0)
-function T($mods) { $s = New-Object byte[] 256; foreach ($m in $mods) { $s[$m[0]] = $m[1] }
-    $b = New-Object System.Text.StringBuilder 8; [void][K.U]::ToUnicodeEx(0x51, 0x10, $s, $b, 8, 4, $hkl); $b.ToString() }
-if ($hkl -eq [IntPtr]::Zero) { Write-Warning 'LoadKeyboardLayout ვერ ჩატვირთა — გადატვირთეთ კომპიუტერი და სცადეთ.' }
+# @(,@(…)) — ერთელემენტიანი მასივი მასივისა; @(@(…)) PowerShell-ში ბრტყელდება
+$modVk = @{ Shift = @(,@(0x10, 0x80)); Caps = @(,@(0x14, 0x01)); AltGr = @(@(0x11, 0x80), @(0x12, 0x80)) }
+function T($t) {
+    $s = New-Object byte[] 256
+    foreach ($m in $t.Mods) { foreach ($p in $modVk[$m]) { $s[$p[0]] = $p[1] } }
+    $b = New-Object System.Text.StringBuilder 8
+    [void][K.U]::ToUnicodeEx($t.Vk, $t.Sc, $s, $b, 8, 4, $hkl)   # 4 = კლავიატურის მდგომარეობას არ ცვლის
+    $b.ToString()
+}
+if ($hkl -eq [IntPtr]::Zero) { Write-Warning 'LoadKeyboardLayout ვერ ჩატვირთა — გამოდით სისტემიდან (Sign out), შედით და სცადეთ.' }
 else {
-    $r = @{ 'Q' = T @(); 'Shift+Q' = T @(,@(0x10,0x80)); 'CapsLock+Q' = T @(,@(0x14,0x01)); 'AltGr+Q' = T @(@(0x11,0x80),@(0x12,0x80)) }
-    $r.GetEnumerator() | Sort-Object Name | ForEach-Object { Write-Host ("  {0,-11} -> {1}" -f $_.Name, $_.Value) }
-    if ($r['Q'] -eq [string][char]0x10E9 -and $r['Shift+Q'] -eq [string][char]0x1CA9 -and $r['CapsLock+Q'] -eq [string][char]0x1CA9) {
-        Write-Host 'შემოწმება: OK (ჩ / Ჩ / Ჩ)' -ForegroundColor Green
-    } else { Write-Warning 'შემოწმების შედეგი მოსალოდნელს არ ემთხვევა.' }
+    $ok = $true
+    foreach ($t in $L.Tests) {
+        $got = T $t; $want = [string][char]$t.Expect
+        if ($got -ne $want) { $ok = $false }
+        Write-Host ("  {0,-18} -> {1}   (მოსალოდნელი: {2})" -f $t.Name, $got, $want)
+    }
+    if ($ok) { Write-Host 'შემოწმება: OK' -ForegroundColor Green }
+    else { Write-Warning 'შემოწმების შედეგი მოსალოდნელს არ ემთხვევა.' }
 }
 Write-Host 'მზადაა. გადართვა: Win+Space. თუ სიაში არ ჩანს — გამოდით და ხელახლა შედით სისტემაში.'
