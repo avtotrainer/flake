@@ -35,6 +35,7 @@
 
 **Google Drive** (რეკომენდებული სკოლაში): საქაღალდე „ქართული კლავიატურა Windows (kbdgemtv)“
 https://drive.google.com/drive/folders/1FW8YVg316gqT8j1G5fLfpDmXdsT-o0CC
+პირდაპირ ფაილი: https://drive.google.com/file/d/1eAEPVqQ7OOwzOgsgKOjEtma2-pG735or/view
 
 შედით ბრაუზერში din.ge ანგარიშით, მარჯვენა ღილაკი zip ფაილზე → **Download**.
 
