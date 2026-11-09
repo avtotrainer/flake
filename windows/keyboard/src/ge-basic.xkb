@@ -1,0 +1,59 @@
+default partial alphanumeric_keys
+xkb_symbols "basic" {
+
+    name[Group1]= "Georgian";
+
+    key <TLDE> { [ 0x0100201e, 0x0100201c, 0x0100201e, asciitilde ] };
+    key <AE01> { [ 1,             exclam,        apostrophe    ] };
+    key <AE02> { [ 2,             at,            0x0100201e    ] };
+    key <AE03> { [ 3,             numbersign,    0x0100201c    ] };
+    key <AE04> { [ 4,             dollar,        0x01002116    ] };
+    key <AE05> { [ 5,             percent,       EuroSign      ] };
+    key <AE06> { [ 6,             asciicircum                  ] };
+    key <AE07> { [ 7,             ampersand,     section       ] };
+    key <AE08> { [ 8,             asterisk,      degree        ] };
+    key <AE09> { [ 9,             parenleft                    ] };
+    key <AE10> { [ 0,             parenright                   ] };
+    key <AE11> { [ minus,         underscore,    0x01002014    ] };
+    key <AE12> { [ equal,         plus,          0x01002013    ] };
+
+    key <AD01> { [ Georgian_khar, Q                            ] };
+    key <AD02> { [ Georgian_cil,  Georgian_char                ] };
+    key <AD03> { [ Georgian_en,   E,             Georgian_he   ] };
+    key <AD04> { [ Georgian_rae,  Georgian_ghan, registered    ] };
+    key <AD05> { [ Georgian_tar,  Georgian_tan                 ] };
+    key <AD06> { [ Georgian_qar,  Y,             0x010010f8    ] };
+    key <AD07> { [ Georgian_un,   U                            ] };
+    key <AD08> { [ Georgian_in,   I,             Georgian_hie  ] };
+    key <AD09> { [ Georgian_on,   O                            ] };
+    key <AD10> { [ Georgian_par,  P                            ] };
+    key <AD11> { [ bracketleft,   braceleft                    ] };
+    key <AD12> { [ bracketright,  braceright                   ] };
+
+    key <AC01> { [ Georgian_an,   A,             0x010010fa    ] };
+    key <AC02> { [ Georgian_san,  Georgian_shin                ] };
+    key <AC03> { [ Georgian_don,  D                            ] };
+    key <AC04> { [ Georgian_phar, F,             Georgian_fi   ] };
+    key <AC05> { [ Georgian_gan,  G,             0x010010f9    ] };
+    key <AC06> { [ Georgian_hae,  H,             Georgian_hoe  ] };
+    key <AC07> { [ Georgian_jhan, Georgian_zhar, 0x010010f7    ] };
+    key <AC08> { [ Georgian_kan,  K                            ] };
+    key <AC09> { [ Georgian_las,  L                            ] };
+    key <AC10> { [ semicolon,     colon                        ] };
+    key <AC11> { [ apostrophe,    quotedbl                     ] };
+    key <BKSL> { [ backslash,     bar, asciitilde, asciitilde  ] };
+
+    key <LSGT> { [ guillemotleft, guillemotright               ] };
+    key <AB01> { [ Georgian_zen,  Georgian_jil                 ] };
+    key <AB02> { [ Georgian_xan,  X,             Georgian_har  ] };
+    key <AB03> { [ Georgian_can,  Georgian_chin, copyright     ] };
+    key <AB04> { [ Georgian_vin,  V,             Georgian_we   ] };
+    key <AB05> { [ Georgian_ban,  B                            ] };
+    key <AB06> { [ Georgian_nar,  N,             0x010010fc    ] };
+    key <AB07> { [ Georgian_man,  M                            ] };
+    key <AB08> { [ comma,         less,          guillemotleft ] };
+    key <AB09> { [ period,        greater,      guillemotright ] };
+    key <AB10> { [ slash,         question,      0x010010fb    ] };
+
+    include "level3(ralt_switch)"
+};

@@ -42,3 +42,10 @@ nix eval .#nixosConfigurations.laptop.config.<option>   # check a value without 
 ## Gotchas
 
 - `*.bak` files are Home Manager backups / old copies, not live config.
+
+## Working style (user preference)
+
+- When practical action is the priority, give the needed command or action directly — no tour of every option or nuance; the user usually knows the possibilities and just needs the exact command.
+- Explain only when it prevents a likely mistake, or when asked.
+- If a step needs the user to run a check and paste its output, stop at that step and wait for the result — don't write the following steps in advance.
+- Don't drag the workflow out with excessive detail.
