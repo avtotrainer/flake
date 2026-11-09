@@ -2,7 +2,7 @@
 # Windows-ის კლავიატურის განლაგებების აგება xkb წყაროებიდან.
 #   kbdgemtv — Georgian (Ergonomic, Mtavruli) - avto : NixOS-ის ge-custom (Shift/Caps → მთავრული)
 #   kbdgeqmt — Georgian (QWERTY, Mtavruli)            : ge(basic); Shift — როგორც ჩვეულებრივ, Caps Lock → მთავრული
-# შედეგი თითოეულზე: klc/<id>.klc, build/<id>/<arch>/<id>.dll, dist/<id>-windows-<ver>{,-x64}.zip
+# შედეგი თითოეულზე: klc/<id>.klc, build/<id>/<arch>/<id>.dll, dist/<slug>-<ver>{,-x64}.zip
 set -euo pipefail
 cd "$(dirname "$0")"
 GE_CUSTOM=../../modules/nixos/xkb/symbols/ge-custom     # ერგონომიკულის ერთადერთი წყარო — NixOS-ის განლაგება
@@ -12,8 +12,8 @@ mkdir -p build dist klc
 # psd1-ის Tests: Name, Vk, Sc, Mods (Shift/Caps/AltGr), Expect (კოდი)
 test_line() { printf "    @{ Name = '%s'; Vk = %s; Sc = %s; Mods = @(%s); Expect = %s }\r\n" "$@"; }
 
-layout() { # id text desc dllver pkgver caps tests-fn xkb...
-  local id=$1 text=$2 desc=$3 dllver=$4 pkgver=$5 caps=$6 tests=$7; shift 7
+layout() { # id slug text desc dllver pkgver caps tests-fn xkb...
+  local id=$1 slug=$2 text=$3 desc=$4 dllver=$5 pkgver=$6 caps=$7 tests=$8; shift 8
   local B=build/$id
   echo "== $id ($text)"
   mkdir -p "$B"
@@ -46,11 +46,11 @@ layout() { # id text desc dllver pkgver caps tests-fn xkb...
     printf '  )\r\n}\r\n'; } > "$PKG/layout.psd1"
   printf '%s, v%s\r\nინსტალაცია: install.cmd\r\nჰენდაუტი: docs/windows/ (github.com/avtotrainer/flake)\r\n' "$text" "$pkgver" > "$PKG/README.txt"
   for a in amd64 i386 arm64 wow64; do mkdir -p "$PKG/$a" && cp "$B/$a/$id.dll" "$PKG/$a/"; done
-  rm -f dist/"$id"-windows-"$pkgver"*.zip
-  (cd "$B/pkg" && python3 - "$id" "$pkgver" <<'PY'
+  rm -f dist/"$slug"-"$pkgver"*.zip
+  (cd "$B/pkg" && python3 - "$id" "$pkgver" "$slug" <<'PY'
 import os, sys, zipfile
-i, v = sys.argv[1:3]
-for name, skip in ((f"{i}-windows-{v}.zip", ()), (f"{i}-windows-{v}-x64.zip", ("i386", "arm64"))):
+i, v, s = sys.argv[1:4]
+for name, skip in ((f"{s}-{v}.zip", ()), (f"{s}-{v}-x64.zip", ("i386", "arm64"))):
     z = zipfile.ZipFile(f"../../../dist/{name}", "w", zipfile.ZIP_DEFLATED, compresslevel=9)
     for r, _, fs in sorted(os.walk(i)):
         if os.path.basename(r) in skip: continue
@@ -74,9 +74,9 @@ tests_qwerty() {      # W: წ / ჭ / Წ / Ჭ;  Q: Shift → ლათინ�
   test_line 'CapsLock+Q'       0x51 0x10 "'Caps'"         0x1CA5
 }
 
-layout kbdgemtv "Georgian (Ergonomic, Mtavruli) - avto" "Georgian (Ergonomic, Mtavruli)" 1.0.0.1 1.1.0 alpha \
+layout kbdgemtv windows-georgian-ergonomic-mtavruli "Georgian (Ergonomic, Mtavruli) - avto" "Georgian (Ergonomic, Mtavruli)" 1.0.0.1 1.1.0 alpha \
        tests_ergonomic src/ergonomic.xkb "$GE_CUSTOM"
-layout kbdgeqmt "Georgian (QWERTY, Mtavruli)" "Georgian (QWERTY, Mtavruli)" 1.0.0.1 1.0.0 sgcaps \
+layout kbdgeqmt windows-georgian-qwerty-mtavruli "Georgian (QWERTY, Mtavruli)" "Georgian (QWERTY, Mtavruli)" 1.0.0.1 1.0.0 sgcaps \
        tests_qwerty src/ge-basic.xkb
 
 ls -l dist/

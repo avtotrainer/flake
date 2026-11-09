@@ -37,7 +37,7 @@
 | `build/`, `dist/` | აგების შედეგი, `.gitignore`-შია | — |
 
 DLL-ის ვარიანტები: `amd64` (x64), `i386` (32-ბიტიანი Windows), `arm64`, `wow64` (32-ბიტიანი კოდი 64-ბიტიანი პოინტერებით — `SysWOW64`-ისთვის).
-პაკეტები: `dist/<id>-windows-<ver>.zip` (ყველა) და `dist/<id>-windows-<ver>-x64.zip` (amd64 + wow64, სკოლისთვის).
+პაკეტები: `dist/<slug>-<ver>.zip` (ყველა) და `dist/<slug>-<ver>-x64.zip` — slug: `windows-georgian-ergonomic-mtavruli`, `windows-georgian-qwerty-mtavruli`; (amd64 + wow64, სკოლისთვის).
 
 ---
 
@@ -53,7 +53,7 @@ $EDITOR build.sh                                  # 2. შესაბამი�
 nix shell nixpkgs#llvmPackages.clang-unwrapped nixpkgs#lld \
           nixpkgs#llvmPackages.llvm nixpkgs#python3 -c ./build.sh   # 3. აგება + შემოწმება
 git add klc build.sh && git commit -m "windows/keyboard: <id> vX.Y.Z"
-# 4. dist/<id>-windows-X.Y.Z-x64.zip → Drive-ის შესაბამისი საქაღალდე
+# 4. dist/<slug>-X.Y.Z-x64.zip → Drive-ის შესაბამისი საქაღალდე
 ```
 
 მოსალოდნელი გამოსავალი თითო DLL-ზე: `50 keys checked, 0 mismatches`.

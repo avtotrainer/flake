@@ -2,7 +2,7 @@
 
 ეს ჰენდაუტი აღწერს, როგორ დავაყენოთ Windows-ის კომპიუტერზე იგივე ქართული განლაგება, რაც NixOS-ზე გვაქვს: ერგონომიკული ქართული, სადაც **Caps Lock** და **Shift** მთავრულს წერს.
 
-ფაილის სახელი: `kbdgemtv-windows-1.1.0-x64.zip`
+ფაილის სახელი: `windows-georgian-ergonomic-mtavruli-1.1.0-x64.zip`
 განლაგების სახელი Windows-ში: **Georgian (Ergonomic, Mtavruli) - avto**
 
 ---
@@ -27,9 +27,9 @@
 
 - Windows 10 (ვერსია 1607 ან ახალი) ან Windows 11, **64-ბიტიანი, Intel/AMD პროცესორით** — ასეთია სკოლის თითქმის ყველა კომპიუტერი.
   შემოწმება: Settings → System → About → **System type**: „64-bit operating system, x64-based processor“.
-  ARM ან 32-ბიტიანი Windows-ისთვის საჭიროა სრული პაკეტი `kbdgemtv-windows-1.1.0.zip` (`dist/`-დან, `build.sh`-ის შედეგი).
+  ARM ან 32-ბიტიანი Windows-ისთვის საჭიროა სრული პაკეტი `windows-georgian-ergonomic-mtavruli-1.1.0.zip` (`dist/`-დან, `build.sh`-ის შედეგი).
 - **ადმინისტრატორის პაროლი** — მხოლოდ ერთხელ თითო კომპიუტერზე.
-- ფაილი `kbdgemtv-windows-1.1.0-x64.zip`.
+- ფაილი `windows-georgian-ergonomic-mtavruli-1.1.0-x64.zip`.
 
 ### სად ავიღოთ ფაილი
 
@@ -45,7 +45,7 @@ https://drive.google.com/drive/folders/1FW8YVg316gqT8j1G5fLfpDmXdsT-o0CC
 
 ## 3. ინსტალაცია (ერთი კომპიუტერი)
 
-1. **ჩამოტვირთეთ** `kbdgemtv-windows-1.1.0-x64.zip` (მაგალითად, `Downloads` საქაღალდეში).
+1. **ჩამოტვირთეთ** `windows-georgian-ergonomic-mtavruli-1.1.0-x64.zip` (მაგალითად, `Downloads` საქაღალდეში).
 2. **ამოაარქივეთ**: მარჯვენა ღილაკი → **Extract All…** → **Extract**.
    გაჩნდება საქაღალდე `kbdgemtv`. *zip-ის შიგნიდან პირდაპირ ნუ გაუშვებთ — ფაილები ვერ მოიძებნება.*
 3. საქაღალდეში `kbdgemtv` ორჯერ დააწკაპუნეთ **`install.cmd`**-ზე.
@@ -109,6 +109,6 @@ cd ~/flake/windows/keyboard
 nix shell nixpkgs#llvmPackages.clang-unwrapped nixpkgs#lld nixpkgs#llvmPackages.llvm nixpkgs#python3 -c ./build.sh
 ```
 
-შედეგი: `dist/kbdgemtv-windows-<VERSION>.zip` (ყველა არქიტექტურა) და `dist/kbdgemtv-windows-<VERSION>-x64.zip` (სკოლისთვის); იგივე `kbdgeqmt`-ისთვის — x64 ატვირთეთ Drive-ის საქაღალდეში (ძველი ვერსია წაშალეთ). `build.sh` თითოეულ DLL-ს ამოწმებს (`50 keys checked, 0 mismatches`) და აგება განმეორებადია (`/Brepro`): იგივე წყარო → ბაიტ-ბაიტ იგივე DLL.
+შედეგი: `dist/windows-georgian-ergonomic-mtavruli-<VERSION>.zip` (ყველა არქიტექტურა) და `dist/windows-georgian-ergonomic-mtavruli-<VERSION>-x64.zip` (სკოლისთვის); იგივე `kbdgeqmt`-ისთვის — x64 ატვირთეთ Drive-ის საქაღალდეში (ძველი ვერსია წაშალეთ). `build.sh` თითოეულ DLL-ს ამოწმებს (`50 keys checked, 0 mismatches`) და აგება განმეორებადია (`/Brepro`): იგივე წყარო → ბაიტ-ბაიტ იგივე DLL.
 
 დეტალები: `windows/keyboard/README.md`. QWERTY ვერსია სხვებისთვის: [`keyboard-qwerty-install.md`](keyboard-qwerty-install.md).

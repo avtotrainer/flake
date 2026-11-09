@@ -3,7 +3,7 @@
 ეს არის Windows-ის ჩვეულებრივი **Georgian (QWERTY)** განლაგება ერთი დამატებით: **Caps Lock-ით იწერება მთავრული**.
 ყველაფერი დანარჩენი — ასოების ადგილი, Shift-ით აკრეფილი ასოები (ჭ, ღ, თ, შ, ჟ, ძ, ჩ) — უცვლელია.
 
-ფაილის სახელი: `kbdgeqmt-windows-1.0.0-x64.zip`
+ფაილის სახელი: `windows-georgian-qwerty-mtavruli-1.0.0-x64.zip`
 განლაგების სახელი Windows-ში: **Georgian (QWERTY, Mtavruli)**
 
 ---
@@ -33,7 +33,7 @@
 - Windows 10 (ვერსია 1607 ან ახალი) ან Windows 11, **64-ბიტიანი, Intel/AMD პროცესორით** — ასეთია სკოლის თითქმის ყველა კომპიუტერი.
   შემოწმება: Settings → System → About → **System type**: „64-bit operating system, x64-based processor“.
 - **ადმინისტრატორის პაროლი** — მხოლოდ ერთხელ თითო კომპიუტერზე.
-- ფაილი `kbdgeqmt-windows-1.0.0-x64.zip`.
+- ფაილი `windows-georgian-qwerty-mtavruli-1.0.0-x64.zip`.
 
 ### სად ავიღოთ ფაილი
 
@@ -45,7 +45,7 @@ https://drive.google.com/drive/folders/1F7FrejPVZp2BFFB5Wcw2FbWRPaRjdmkQ
 
 ## 3. ინსტალაცია (ერთი კომპიუტერი)
 
-1. **ჩამოტვირთეთ** `kbdgeqmt-windows-1.0.0-x64.zip`.
+1. **ჩამოტვირთეთ** `windows-georgian-qwerty-mtavruli-1.0.0-x64.zip`.
 2. **ამოაარქივეთ**: მარჯვენა ღილაკი → **Extract All…** → **Extract**. გაჩნდება საქაღალდე `kbdgeqmt`.
    *zip-ის შიგნიდან პირდაპირ ნუ გაუშვებთ — ფაილები ვერ მოიძებნება.*
 3. საქაღალდეში `kbdgeqmt` ორჯერ დააწკაპუნეთ **`install.cmd`**-ზე.
@@ -106,4 +106,4 @@ cd ~/flake/windows/keyboard
 nix shell nixpkgs#llvmPackages.clang-unwrapped nixpkgs#lld nixpkgs#llvmPackages.llvm nixpkgs#python3 -c ./build.sh
 ```
 
-შედეგი: `dist/kbdgeqmt-windows-<VERSION>-x64.zip` → Drive. დეტალები: `windows/keyboard/README.md`.
+შედეგი: `dist/windows-georgian-qwerty-mtavruli-<VERSION>-x64.zip` → Drive. დეტალები: `windows/keyboard/README.md`.
